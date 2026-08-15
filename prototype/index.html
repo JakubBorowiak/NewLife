@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Nowe Życie — prototyp</title>
+<style>
+  :root{
+    --bg:#f7f2ec; --surface:#fffdfa; --surface-2:#f1e8dd; --ink:#2e2430;
+    --ink-soft:#6a5c63; --line:#e7dccd; --accent:#c2683f; --accent-soft:#eab894;
+    --accent-2:#7a6a8f; --gold:#b7893f; --good:#5a7d55;
+    --shadow:0 1px 2px rgba(46,36,48,.05), 0 10px 30px rgba(46,36,48,.08);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#141018; --surface:#241d29; --surface-2:#2d2431; --ink:#f0e7ea;
+      --ink-soft:#b3a2ac; --line:#3a2f3f; --accent:#e08a5c; --accent-soft:#5a3f30;
+      --accent-2:#b0a0c4; --gold:#d6ab6a; --good:#8fb488;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.4);
+    }
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;height:100%;}
+  body{
+    background:#0d0b10;
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    min-height:100vh;padding:20px;
+    background-image:radial-gradient(120% 80% at 50% 0%, #2a2230 0%, #0d0b10 70%);
+  }
+
+  /* Phone frame */
+  .phone{
+    width:390px;max-width:100%;height:844px;max-height:96vh;
+    background:var(--bg);border-radius:44px;overflow:hidden;position:relative;
+    box-shadow:0 0 0 11px #1a161d, 0 0 0 13px #322b36, 0 40px 80px rgba(0,0,0,.6);
+    display:flex;flex-direction:column;
+  }
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:150px;height:30px;background:#1a161d;border-radius:0 0 18px 18px;z-index:50;}
+
+  /* App chrome */
+  .statusbar{padding:14px 26px 4px;display:flex;justify-content:space-between;
+    font-size:13px;font-weight:600;color:var(--ink);flex:0 0 auto;}
+  .appbar{padding:6px 22px 10px;display:flex;align-items:center;justify-content:space-between;flex:0 0 auto;}
+  .appbar .brand{font-size:15px;font-weight:700;letter-spacing:-.01em;}
+  .appbar .brand small{display:block;font-size:10px;font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent);}
+  .gear{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);
+    background:var(--surface);display:grid;place-items:center;font-size:17px;cursor:pointer;}
+
+  /* Screen area */
+  .screen-wrap{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;padding:4px 20px 24px;
+    scrollbar-width:none;}
+  .screen-wrap::-webkit-scrollbar{display:none;}
+  .screen{display:none;animation:fade .35s ease;}
+  .screen.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  h1.greet{font-size:26px;margin:6px 0 2px;letter-spacing:-.02em;line-height:1.15;}
+  .subtle{color:var(--ink-soft);font-size:14px;margin:0;}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:20px;
+    padding:18px;box-shadow:var(--shadow);margin-top:14px;}
+  .card h3{margin:0 0 4px;font-size:16px;}
+  .card .lbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--accent-2);margin:0 0 10px;}
+
+  .quote{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:17px;
+    line-height:1.5;color:var(--ink);}
+  .quote .mark{color:var(--accent);font-size:22px;}
+
+  /* Mood picker */
+  .moods{display:flex;gap:8px;justify-content:space-between;margin-top:4px;}
+  .mood{flex:1;aspect-ratio:1;border:1px solid var(--line);background:var(--surface-2);
+    border-radius:16px;font-size:26px;display:grid;place-items:center;cursor:pointer;
+    transition:transform .12s, border-color .12s, background .12s;}
+  .mood:active{transform:scale(.9);}
+  .mood.sel{border-color:var(--accent);background:var(--accent-soft);transform:scale(1.06);}
+  .mood-note{width:100%;margin-top:12px;border:1px solid var(--line);border-radius:14px;
+    background:var(--surface-2);color:var(--ink);padding:12px;font-size:14px;font-family:inherit;
+    resize:none;}
+  .mood-hint{font-size:12.5px;color:var(--ink-soft);margin:10px 0 0;font-style:italic;}
+
+  /* One goal */
+  .goal-input{width:100%;border:none;border-bottom:2px solid var(--line);background:transparent;
+    color:var(--ink);font-size:18px;padding:8px 2px;font-family:inherit;}
+  .goal-input:focus{outline:none;border-color:var(--accent);}
+  .goal-input::placeholder{color:var(--ink-soft);}
+
+  /* Habits */
+  .progress-wrap{margin:2px 0 6px;}
+  .progress-track{height:10px;border-radius:8px;background:var(--surface-2);overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--accent));
+    border-radius:8px;width:0;transition:width .5s cubic-bezier(.2,.8,.2,1);}
+  .progress-label{font-size:13px;color:var(--ink-soft);margin:8px 0 0;}
+
+  .habit{display:flex;align-items:center;gap:13px;padding:13px 4px;border-bottom:1px solid var(--line);cursor:pointer;}
+  .habit:last-child{border-bottom:none;}
+  .check{width:26px;height:26px;border-radius:9px;border:2px solid var(--line);flex:0 0 auto;
+    display:grid;place-items:center;color:#fff;font-size:15px;transition:.15s;}
+  .habit.done .check{background:var(--good);border-color:var(--good);}
+  .habit.done .h-name{color:var(--ink-soft);text-decoration:line-through;}
+  .h-emoji{font-size:19px;}
+  .h-name{font-size:15px;flex:1;}
+  .h-min{font-size:12px;color:var(--accent-2);font-weight:600;}
+
+  .praise{margin-top:14px;text-align:center;background:var(--accent-soft);
+    border-radius:16px;padding:14px;font-size:14.5px;color:var(--ink);display:none;}
+  .praise.show{display:block;animation:fade .4s ease;}
+
+  /* Lekki dzień banner */
+  .light-toggle{display:flex;align-items:center;gap:12px;background:var(--surface-2);
+    border:1px dashed var(--accent);border-radius:16px;padding:14px 16px;margin-top:14px;cursor:pointer;}
+  .light-toggle .ic{font-size:22px;}
+  .light-toggle .t{flex:1;}
+  .light-toggle .t b{font-size:14px;display:block;}
+  .light-toggle .t span{font-size:12px;color:var(--ink-soft);}
+  .switch{width:46px;height:27px;border-radius:20px;background:var(--line);position:relative;flex:0 0 auto;transition:.2s;}
+  .switch::after{content:"";position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;
+    background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3);}
+  .switch.on{background:var(--accent);}
+  .switch.on::after{left:22px;}
+
+  /* Evening sections */
+  .field{margin-top:12px;}
+  .field label{font-size:13px;font-weight:600;display:block;margin-bottom:6px;}
+  .field textarea, .field input{width:100%;border:1px solid var(--line);border-radius:14px;
+    background:var(--surface-2);color:var(--ink);padding:12px;font-size:14px;font-family:inherit;resize:none;}
+  .field textarea:focus,.field input:focus{outline:none;border-color:var(--accent);}
+
+  .wins-wall{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .win-chip{background:var(--accent-soft);border-radius:20px;padding:7px 13px;font-size:13px;}
+
+  /* Progress screen */
+  .streak-big{text-align:center;padding:6px 0;}
+  .streak-big .num{font-size:56px;font-weight:800;color:var(--accent);line-height:1;letter-spacing:-.03em;}
+  .streak-big .cap{font-size:14px;color:var(--ink-soft);margin-top:4px;}
+  .streak-big .freeze{font-size:12px;color:var(--accent-2);margin-top:8px;}
+  .week{display:flex;justify-content:space-between;margin-top:6px;}
+  .day-col{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:var(--ink-soft);}
+  .bar{width:26px;border-radius:8px 8px 4px 4px;background:var(--surface-2);position:relative;height:80px;display:flex;align-items:flex-end;overflow:hidden;}
+  .bar span{width:100%;background:linear-gradient(180deg,var(--accent),var(--gold));border-radius:8px 8px 0 0;transition:height .6s;}
+
+  /* Settings */
+  .set-row{display:flex;align-items:center;gap:12px;padding:14px 2px;border-bottom:1px solid var(--line);}
+  .set-row:last-child{border-bottom:none;}
+  .set-row .ic{font-size:20px;}
+  .set-row .t{flex:1;}
+  .set-row .t b{font-size:14.5px;display:block;}
+  .set-row .t span{font-size:12px;color:var(--ink-soft);}
+  .rytm-times{display:flex;gap:8px;margin-top:10px;}
+  .rytm-times button{flex:1;padding:10px;border-radius:12px;border:1px solid var(--line);
+    background:var(--surface-2);color:var(--ink);font-size:13px;font-family:inherit;cursor:pointer;}
+  .rytm-times button.sel{border-color:var(--accent);background:var(--accent-soft);font-weight:600;}
+
+  .season-note{font-size:12px;color:var(--ink-soft);font-style:italic;margin:10px 0 0;}
+
+  /* Bottom nav */
+  .nav{flex:0 0 auto;display:flex;background:var(--surface);border-top:1px solid var(--line);
+    padding:8px 6px 22px;}
+  .nav button{flex:1;background:none;border:none;display:flex;flex-direction:column;align-items:center;
+    gap:3px;color:var(--ink-soft);font-size:10px;font-family:inherit;cursor:pointer;padding:6px 0;}
+  .nav button .ni{font-size:21px;}
+  .nav button.active{color:var(--accent);}
+  .nav button.active .ni{transform:translateY(-1px);}
+
+  .section-title{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-soft);margin:22px 2px 2px;}
+  .muted-tag{font-size:11px;background:var(--surface-2);color:var(--ink-soft);border-radius:10px;padding:3px 8px;}
+  .empty-ok{text-align:center;color:var(--ink-soft);font-size:13px;padding:20px;font-style:italic;}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="notch"></div>
+  <div class="statusbar"><span id="clock">13:51</span><span>􀙇 􀰖 74%</span></div>
+  <div class="appbar">
+    <div class="brand"><small>Nowe Życie</small>Cześć, Doroto 🌷</div>
+    <div class="gear" onclick="go('set')">⚙️</div>
+  </div>
+
+  <div class="screen-wrap" id="scroll">
+
+    <!-- ============ DZIŚ ============ -->
+    <section class="screen active" id="dzis">
+      <h1 class="greet" id="greet">Dzień dobry ☀️</h1>
+      <p class="subtle" id="greet-sub">Zacznijmy spokojnie. Nic nie musisz — po prostu bądź tu chwilę.</p>
+
+      <div class="card">
+        <p class="lbl">Myśl na dziś</p>
+        <p class="quote"><span class="mark">„</span><span id="quote">Nie musisz robić wszystkiego naraz. Wystarczy jedna rzecz dziś — i pochwała za to, że ją zrobiłaś.</span>”</p>
+      </div>
+
+      <div class="card">
+        <p class="lbl">Jak się dziś czujesz?</p>
+        <div class="moods" id="moods">
+          <div class="mood" data-m="😔">😔</div>
+          <div class="mood" data-m="😕">😕</div>
+          <div class="mood" data-m="😐">😐</div>
+          <div class="mood" data-m="🙂">🙂</div>
+          <div class="mood" data-m="😄">😄</div>
+        </div>
+        <p class="mood-hint" id="mood-hint">Takie dni też bywają i są potrzebne. 💛</p>
+      </div>
+
+      <div class="card">
+        <p class="lbl">Jedna rzecz na dziś</p>
+        <h3 style="margin-bottom:8px">Co byłoby dla Ciebie ważne?</h3>
+        <input class="goal-input" id="goal" placeholder="np. zadzwonić do siostry…">
+        <p class="subtle" style="margin-top:10px;font-size:13px">Tylko jedna. Reszta jest schowana — jak będziesz mieć siłę, zajrzysz do „Nawyki".</p>
+      </div>
+    </section>
+
+    <!-- ============ NAWYKI ============ -->
+    <section class="screen" id="nawyki">
+      <h1 class="greet">Twój dzień</h1>
+      <p class="subtle">Odhaczaj to, co się udało. Puste pola są zupełnie w porządku.</p>
+
+      <div class="light-toggle" id="lightToggle" onclick="toggleLight()">
+        <div class="ic">🌙</div>
+        <div class="t"><b>Tryb „lekki dzień"</b><span>Gorszy dzień? Pokażę tylko 3 najdrobniejsze rzeczy.</span></div>
+        <div class="switch" id="lightSwitch"></div>
+      </div>
+
+      <div class="card">
+        <div class="progress-wrap">
+          <div class="progress-track"><div class="progress-fill" id="pfill"></div></div>
+          <p class="progress-label" id="plabel">Zadbałaś o siebie 0 razy dziś</p>
+        </div>
+        <div id="habitList"></div>
+        <div class="praise" id="praise">🌟 Brawo! Każde odhaczenie to realny krok. Jesteś dla siebie dobra.</div>
+      </div>
+    </section>
+
+    <!-- ============ WIECZÓR ============ -->
+    <section class="screen" id="wieczor">
+      <h1 class="greet">Wieczorna chwila 🌙</h1>
+      <p class="subtle">Kilka spokojnych pytań na koniec dnia. Odpowiedz na tyle, na ile masz ochotę.</p>
+
+      <div class="card">
+        <p class="lbl">Wdzięczność</p>
+        <div class="field"><label>Za co jesteś dziś wdzięczna?</label>
+          <textarea rows="2" placeholder="Choćby najmniejsza rzecz…"></textarea></div>
+      </div>
+
+      <div class="card">
+        <p class="lbl">Pochwal się</p>
+        <div class="field"><label>Twój mały lub duży sukces dnia 🌟</label>
+          <input id="winInput" placeholder="np. wyszłam na spacer mimo zmęczenia">
+        </div>
+        <button onclick="addWin()" style="margin-top:12px;width:100%;padding:12px;border:none;border-radius:14px;background:var(--accent);color:#fff;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;">Dodaj do ściany sukcesów</button>
+        <div class="wins-wall" id="winsWall"></div>
+      </div>
+
+      <div class="card">
+        <p class="lbl">Autorefleksja</p>
+        <div class="field"><label>Notatka — cokolwiek chcesz zapisać</label>
+          <textarea rows="3" placeholder="Myśli, obserwacje, co dziś zrozumiałaś…"></textarea></div>
+      </div>
+
+      <div class="card">
+        <p class="lbl">Lekki plan na jutro</p>
+        <div class="field"><label>Ważne (1 rzecz)</label><input placeholder="To naprawdę ważne…"></div>
+        <div class="field"><label>Mniej ważne</label><input placeholder="Jak starczy sił…"></div>
+      </div>
+    </section>
+
+    <!-- ============ POSTĘPY ============ -->
+    <section class="screen" id="postepy">
+      <h1 class="greet">Twoja droga</h1>
+      <p class="subtle">Patrzymy na to, co się udało — nie na luki.</p>
+
+      <div class="card streak-big">
+        <div class="num">12</div>
+        <div class="cap">dni pod rząd dbania o siebie</div>
+        <div class="freeze">❄️ Masz 2 „zamrażarki" — gorszy dzień nie zepsuje serii.</div>
+      </div>
+
+      <div class="card">
+        <p class="lbl">Ten tydzień</p>
+        <div class="week" id="week"></div>
+      </div>
+
+      <div class="card">
+        <p class="lbl">Podsumowanie miesiąca</p>
+        <p style="font-size:15px;line-height:1.6;margin:0">W sierpniu zadbałaś o siebie <b style="color:var(--accent)">86 razy</b> 🌷<br>
+        Najczęściej: <b>poranna gimnastyka</b> i <b>szklanka wody</b>. To Twój dowód postępu — nie ocena.</p>
+      </div>
+    </section>
+
+    <!-- ============ USTAWIENIA ============ -->
+    <section class="screen" id="set">
+      <h1 class="greet">Ustawienia</h1>
+      <p class="subtle">Dopasuj aplikację do siebie — nie odwrotnie.</p>
+
+      <p class="section-title">Twój rytm, nie cudzy</p>
+      <div class="card">
+        <p class="subtle" style="font-size:13px;margin-bottom:4px">Kiedy zwykle masz chwilę dla siebie? Wtedy delikatnie przypomnę.</p>
+        <div class="rytm-times" id="rytm">
+          <button data-t="Rano">🌅 Rano</button>
+          <button class="sel" data-t="Po południu">☀️ Po południu</button>
+          <button data-t="Wieczorem">🌙 Wieczorem</button>
+        </div>
+        <p class="season-note">Przypomnienia „po porannej kawie", a nie o sztywnej godzinie.</p>
+      </div>
+
+      <p class="section-title">Sezonowość — co jest teraz aktywne</p>
+      <div class="card">
+        <p class="subtle" style="font-size:13px;margin-bottom:6px">Możesz uśpić dowolny moduł (np. na święta) bez utraty danych i bez poczucia porażki.</p>
+        <div id="seasonList"></div>
+        <p class="season-note">Uśpione moduły znikają z codziennego widoku i wracają jednym dotknięciem.</p>
+      </div>
+
+      <p class="section-title">Ton aplikacji</p>
+      <div class="card">
+        <div class="set-row"><div class="ic">💛</div><div class="t"><b>Łagodny język</b><span>Zero procentów i ocen. „Dobrze, że spróbowałaś".</span></div><div class="switch on"></div></div>
+        <div class="set-row"><div class="ic">🕊️</div><div class="t"><b>Pusty dzień jest OK</b><span>Nic nie świeci na czerwono.</span></div><div class="switch on"></div></div>
+      </div>
+    </section>
+
+  </div>
+
+  <nav class="nav">
+    <button class="active" data-s="dzis" onclick="go('dzis')"><span class="ni">🌸</span>Dziś</button>
+    <button data-s="nawyki" onclick="go('nawyki')"><span class="ni">✅</span>Nawyki</button>
+    <button data-s="wieczor" onclick="go('wieczor')"><span class="ni">🌙</span>Wieczór</button>
+    <button data-s="postepy" onclick="go('postepy')"><span class="ni">📈</span>Postępy</button>
+  </nav>
+</div>
+
+<script>
+  // ---- clock ----
+  function tick(){const d=new Date();document.getElementById('clock').textContent=
+    d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');}
+  tick();setInterval(tick,10000);
+
+  // ---- greeting by time of day (Twój rytm) ----
+  (function(){const h=new Date().getHours();let g,s;
+    if(h<12){g='Dzień dobry ☀️';s='Zacznijmy spokojnie. Nic nie musisz — po prostu bądź tu chwilę.';}
+    else if(h<18){g='Miłego popołudnia 🌼';s='Jak Ci mija dzień? Zajrzyj, na co masz teraz siłę.';}
+    else{g='Dobry wieczór 🌙';s='Czas na chwilę dla siebie. Może wieczorna refleksja?';}
+    document.getElementById('greet').textContent=g;
+    document.getElementById('greet-sub').textContent=s;})();
+
+  // ---- navigation ----
+  function go(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.s===id));
+    document.getElementById('scroll').scrollTop=0;
+  }
+
+  // ---- mood picker ----
+  const hints={'😔':'Takie dni też bywają i są potrzebne. Bądź dziś dla siebie łagodna. 💛',
+    '😕':'Dziękuję, że to zauważyłaś. Może jedna drobna miła rzecz dla siebie?',
+    '😐':'Spokojny dzień to też dobry dzień. 🕊️',
+    '🙂':'Miło to słyszeć. Zatrzymaj tę chwilę na moment.',
+    '😄':'Cudownie! Zapamiętaj, co dziś dało Ci radość. ✨'};
+  document.querySelectorAll('#moods .mood').forEach(m=>m.onclick=()=>{
+    document.querySelectorAll('#moods .mood').forEach(x=>x.classList.remove('sel'));
+    m.classList.add('sel');
+    document.getElementById('mood-hint').textContent=hints[m.dataset.m];
+  });
+
+  // ---- habits ----
+  const fullHabits=[
+    {e:'💧',n:'Szklanka wody'},{e:'💊',n:'Suplementy / leki'},
+    {e:'🚶‍♀️',n:'Ruch',min:'20 min'},{e:'🗣️',n:'Nauka języka',min:'15 min'},
+    {e:'📚',n:'Rozwój (książka/podcast)'},{e:'🧹',n:'Coś w domu'},
+    {e:'📞',n:'Kontakt z bliską osobą'},{e:'🎨',n:'Chwila dla przyjemności'},
+    {e:'🍎',n:'Racjonalny wybór jedzenia'},{e:'😴',n:'Sen — ile godzin'}
+  ];
+  const lightHabits=[
+    {e:'💧',n:'Wypij szklankę wody'},{e:'🌤️',n:'Wyjdź na 5 minut'},{e:'💛',n:'Bądź dziś dla siebie dobra'}
+  ];
+  let lightMode=false;
+  function renderHabits(){
+    const list=document.getElementById('habitList');
+    const data=lightMode?lightHabits:fullHabits.filter(h=>!muted.has(h.n));
+    list.innerHTML='';
+    data.forEach(h=>{
+      const d=document.createElement('div');d.className='habit';
+      d.innerHTML=`<div class="check">✓</div><span class="h-emoji">${h.e}</span>
+        <span class="h-name">${h.n}</span>${h.min?`<span class="h-min">${h.min}</span>`:''}`;
+      d.onclick=()=>{d.classList.toggle('done');updateProgress();};
+      list.appendChild(d);
+    });
+    updateProgress();
+  }
+  function updateProgress(){
+    const all=document.querySelectorAll('#habitList .habit');
+    const done=document.querySelectorAll('#habitList .habit.done').length;
+    const pct=all.length?done/all.length*100:0;
+    document.getElementById('pfill').style.width=pct+'%';
+    document.getElementById('plabel').textContent=
+      done===0?'Puste pola są OK — zacznij od jednej rzeczy':`Zadbałaś o siebie ${done} ${done===1?'raz':'razy'} dziś 🌷`;
+    document.getElementById('praise').classList.toggle('show',done>0);
+  }
+  function toggleLight(){
+    lightMode=!lightMode;
+    document.getElementById('lightSwitch').classList.toggle('on',lightMode);
+    renderHabits();
+  }
+
+  // ---- sezonowość ----
+  const muted=new Set();
+  function renderSeason(){
+    const box=document.getElementById('seasonList');box.innerHTML='';
+    fullHabits.forEach(h=>{
+      const r=document.createElement('div');r.className='set-row';
+      const on=!muted.has(h.n);
+      r.innerHTML=`<div class="ic">${h.e}</div><div class="t"><b>${h.n}</b>
+        <span>${on?'Aktywny w codziennym widoku':'Uśpiony — dane zachowane'}</span></div>
+        <div class="switch ${on?'on':''}"></div>`;
+      r.querySelector('.switch').onclick=()=>{
+        if(muted.has(h.n))muted.delete(h.n);else muted.add(h.n);
+        renderSeason();renderHabits();
+      };
+      box.appendChild(r);
+    });
+  }
+
+  // ---- rytm buttons ----
+  document.querySelectorAll('#rytm button').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('#rytm button').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');
+  });
+
+  // ---- wins wall ----
+  const seedWins=['wyszłam na spacer 🚶‍♀️','zrobiłam pranie','zadzwoniłam do mamy'];
+  function renderWins(){
+    const w=document.getElementById('winsWall');w.innerHTML='';
+    seedWins.forEach(t=>{const c=document.createElement('div');c.className='win-chip';c.textContent='🌟 '+t;w.appendChild(c);});
+  }
+  function addWin(){
+    const i=document.getElementById('winInput');
+    if(i.value.trim()){seedWins.unshift(i.value.trim());i.value='';renderWins();}
+  }
+
+  // ---- week bars ----
+  (function(){const days=['Pn','Wt','Śr','Cz','Pt','So','Nd'];
+    const vals=[70,90,50,80,100,40,60];const box=document.getElementById('week');
+    days.forEach((d,i)=>{const c=document.createElement('div');c.className='day-col';
+      c.innerHTML=`<div class="bar"><span style="height:0"></span></div>${d}`;box.appendChild(c);
+      setTimeout(()=>c.querySelector('span').style.height=vals[i]+'%',100+i*80);});
+  })();
+
+  renderHabits();renderSeason();renderWins();
+</script>
+</body>
+</html>
