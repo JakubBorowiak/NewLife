@@ -1,0 +1,547 @@
+<title>Trening Interwencji</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Układ: jedna kolumna jak aplikacja mobilna; górny pasek z passą i XP, ścieżka lekcji jako węzły, ekran lekcji z dolnym paskiem akcji. */
+:root{
+  --bg:#F2F4F9; --surface:#FFFFFF; --sunken:#E8ECF4; --ink:#151C2C; --muted:#5A6378; --line:#D9DFEA;
+  --accent:#2F52F0; --accent-ink:#FFFFFF; --accent-soft:#E3E9FF;
+  --ok:#17935A; --ok-soft:#DDF4E8; --bad:#D2433A; --bad-soft:#FBE3E1; --xp:#E59A00; --xp-soft:#FFF1D1;
+  --client:#ECEFF6; --coach:#E3E9FF; --note:#6B7389;
+  --display:"Bricolage Grotesque", "Inter", system-ui, sans-serif;
+  --body:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1320; --surface:#171E2F; --sunken:#121827; --ink:#E7EBF4; --muted:#9AA3B8; --line:#283149;
+  --accent:#7B93FF; --accent-ink:#0E1320; --accent-soft:#222C4F;
+  --ok:#3CC983; --ok-soft:#14321F; --bad:#FF7468; --bad-soft:#3A1B1A; --xp:#FFC04A; --xp-soft:#3A2E12;
+  --client:#1F2738; --coach:#232E52; --note:#8E97AC; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1320; --surface:#171E2F; --sunken:#121827; --ink:#E7EBF4; --muted:#9AA3B8; --line:#283149;
+  --accent:#7B93FF; --accent-ink:#0E1320; --accent-soft:#222C4F;
+  --ok:#3CC983; --ok-soft:#14321F; --bad:#FF7468; --bad-soft:#3A1B1A; --xp:#FFC04A; --xp-soft:#3A2E12;
+  --client:#1F2738; --coach:#232E52; --note:#8E97AC; color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+.wrap{max-width:600px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--bg)}
+
+/* ── Górny pasek ── */
+.top{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;padding-block:12px}
+.brand{font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.01em;margin-right:auto}
+.brand span{color:var(--accent)}
+.stat{display:flex;align-items:center;gap:6px;font-weight:700;font-variant-numeric:tabular-nums;font-size:15px;padding:6px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.stat svg{width:18px;height:18px}
+.stat.streak{color:var(--xp)} .stat.xp{color:var(--accent)}
+.stat.off{color:var(--muted)}
+
+/* ── Zakładki ── */
+.tabs{display:flex;gap:4px;padding-block:14px 6px}
+.tab{flex:1;padding:10px 8px;border-radius:10px;border:0;background:transparent;font-weight:600;color:var(--muted);font-size:15px}
+.tab[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 0 var(--line), 0 0 0 1px var(--line)}
+.tab .badge{display:inline-block;min-width:20px;padding:0 6px;margin-left:6px;border-radius:999px;background:var(--bad);color:#fff;font-size:12px;line-height:20px}
+
+/* ── Cel dzienny ── */
+.goal{display:flex;align-items:center;gap:14px;margin-block:10px 8px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.goal .bar{flex:1;height:10px;border-radius:99px;background:var(--sunken);overflow:hidden}
+.goal .bar i{display:block;height:100%;background:var(--xp);border-radius:99px;transition:width .4s}
+.goal small{color:var(--muted);font-size:13px}
+.goal b{font-variant-numeric:tabular-nums}
+
+/* ── Ścieżka ── */
+.unit{margin-top:26px}
+.unit-head{display:flex;flex-direction:column;gap:4px;padding:16px 18px;border-radius:var(--r);background:var(--accent);color:var(--accent-ink)}
+.unit-head .eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.unit-head h2{font-size:22px}
+.unit-head p{margin:0;opacity:.9;font-size:14px}
+.unit.verify .unit-head{background:var(--surface);color:var(--ink);border:2px dashed var(--xp)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--xp-soft);color:var(--xp);width:max-content}
+.nodes{display:flex;flex-direction:column;align-items:center;gap:18px;padding-block:22px 4px}
+.node{display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:0;padding:0}
+.node .disc{width:76px;height:70px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);box-shadow:0 6px 0 color-mix(in srgb, var(--accent) 60%, #000);transition:transform .1s}
+.node:active .disc{transform:translateY(4px);box-shadow:0 2px 0 color-mix(in srgb, var(--accent) 60%, #000)}
+.node .disc svg{width:32px;height:32px}
+.node.done .disc{background:var(--xp);color:#3A2600;box-shadow:0 6px 0 color-mix(in srgb, var(--xp) 60%, #000)}
+.node.fresh .disc{background:var(--surface);color:var(--muted);border:2px solid var(--line);box-shadow:0 6px 0 var(--line)}
+.node .label{font-weight:600;font-size:14px;max-width:220px;text-align:center}
+.node .meta{font-size:12px;color:var(--muted);margin-top:-6px}
+.nodes .node:nth-child(4n+2){transform:translateX(46px)}
+.nodes .node:nth-child(4n+4){transform:translateX(-46px)}
+
+.locked{margin-top:12px;display:grid;gap:10px}
+.lock-card{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line)}
+.lock-card svg{flex:none;width:22px;height:22px;color:var(--muted);margin-top:2px}
+.lock-card h3{font-size:16px}
+.lock-card p{margin:2px 0 0;font-size:14px;color:var(--muted)}
+.section-title{font-family:var(--display);font-size:18px;margin-top:34px}
+.section-title + p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.footer{color:var(--muted);font-size:13px;padding-block:36px 48px;text-align:center}
+
+/* ── Źródła ── */
+.src-list{display:grid;gap:10px;margin-top:12px}
+.src{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.src h3{font-size:16px;font-family:var(--body);font-weight:600}
+.src p{grid-column:1/-1;margin:0;font-size:14px;color:var(--muted)}
+.pill{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;align-self:start}
+.pill.ready{background:var(--ok-soft);color:var(--ok)} .pill.waiting{background:var(--xp-soft);color:var(--xp)} .pill.queued{background:var(--sunken);color:var(--muted)}
+.prose{margin-top:20px;padding:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);font-size:15px}
+.prose h3{font-size:16px;margin-bottom:6px}
+.prose ol{margin:6px 0 0;padding-left:20px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.btn-ghost{padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:14px}
+.btn-ghost.danger{color:var(--bad)}
+
+/* ── Powtórki ── */
+.review-hero{margin-top:14px;padding:22px 20px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);display:grid;gap:10px}
+.review-hero .big{font-family:var(--display);font-size:44px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.review-hero p{margin:0;color:var(--muted)}
+.boxes{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:6px}
+.boxes div{display:grid;gap:2px;text-align:center;padding:8px 2px;border-radius:10px;background:var(--sunken);font-size:12px;color:var(--muted)}
+.boxes b{font-size:17px;color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* ── Przycisk główny ── */
+.primary{width:100%;padding:15px 18px;border:0;border-radius:14px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:16px;letter-spacing:.02em;text-transform:uppercase;box-shadow:0 4px 0 color-mix(in srgb, var(--accent) 60%, #000)}
+.primary:active{transform:translateY(2px);box-shadow:0 2px 0 color-mix(in srgb, var(--accent) 60%, #000)}
+.primary:disabled{background:var(--sunken);color:var(--muted);box-shadow:none;cursor:default}
+.primary.ok{background:var(--ok);color:#fff;box-shadow:0 4px 0 color-mix(in srgb, var(--ok) 60%, #000)}
+.primary.bad{background:var(--bad);color:#fff;box-shadow:0 4px 0 color-mix(in srgb, var(--bad) 60%, #000)}
+
+/* ── Ekran lekcji ── */
+.lesson{min-height:100%;display:flex;flex-direction:column}
+.l-top{display:flex;align-items:center;gap:14px;padding-block:14px}
+.x{border:0;background:none;padding:6px;color:var(--muted);display:grid;place-items:center}
+.x svg{width:24px;height:24px}
+.progress{flex:1;height:14px;border-radius:99px;background:var(--sunken);overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:var(--ok);border-radius:99px;transition:width .35s}
+.l-body{flex:1;padding-block:8px 24px;display:flex;flex-direction:column;gap:16px}
+.tech{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.q{font-family:var(--display);font-size:22px;font-weight:600;line-height:1.25}
+.ctx{padding:12px 14px;border-radius:12px;background:var(--sunken);font-size:15px}
+
+.dialog{display:flex;flex-direction:column;gap:8px}
+.line{max-width:88%;padding:10px 14px;border-radius:16px;font-size:15px}
+.line .who{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.line.K{background:var(--client);border-bottom-left-radius:4px;align-self:flex-start}
+.line.C{background:var(--coach);border-bottom-right-radius:4px;align-self:flex-end}
+.line.N{align-self:center;max-width:100%;background:none;color:var(--note);font-style:italic;text-align:center;padding:2px 8px;font-size:14px}
+
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:13px 14px;border-radius:14px;background:var(--surface);border:2px solid var(--line);box-shadow:0 3px 0 var(--line);font-size:15px;transition:border-color .12s, background .12s}
+.opt .k{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;border:2px solid var(--line);font-size:13px;font-weight:700;color:var(--muted)}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 3px 0 var(--accent)}
+.opt[aria-pressed="true"] .k{border-color:var(--accent);color:var(--accent)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft);box-shadow:0 3px 0 var(--ok)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft);box-shadow:0 3px 0 var(--bad)}
+.opt:disabled{cursor:default}
+
+.learn{padding:20px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);display:grid;gap:12px}
+.learn h2{font-size:24px}
+.learn p{margin:0}
+.learn ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.learn .note{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.learn-eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--xp)}
+
+.pool,.answer{display:flex;flex-wrap:wrap;gap:8px;min-height:56px}
+.answer{flex-direction:column;padding:10px;border-radius:14px;border:2px dashed var(--line);background:var(--sunken)}
+.answer:empty::before{content:"Dotykaj elementów poniżej w odpowiedniej kolejności";color:var(--muted);font-size:14px;padding:6px}
+.pool{flex-direction:column}
+.piece{text-align:left;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--surface);box-shadow:0 3px 0 var(--line);font-size:15px;display:flex;gap:10px;align-items:baseline}
+.piece .n{font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.piece.used{visibility:hidden}
+
+textarea{width:100%;min-height:130px;padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:15px;resize:vertical}
+.model{display:grid;gap:10px}
+.model .box{padding:14px;border-radius:14px;background:var(--ok-soft);border:1px solid color-mix(in srgb, var(--ok) 35%, transparent)}
+.model h3{font-size:14px;font-family:var(--body);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ok);margin-bottom:6px}
+.model ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.checks{display:grid;gap:6px}
+.checks label{display:flex;gap:10px;align-items:flex-start;font-size:15px;padding:8px 10px;border-radius:10px;background:var(--surface);border:1px solid var(--line)}
+.checks input{margin-top:4px;accent-color:var(--ok);width:18px;height:18px}
+.self{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.self button{padding:12px 6px;border-radius:12px;border:2px solid var(--line);background:var(--surface);font-weight:700;font-size:14px}
+.self .s-ok{border-color:var(--ok);color:var(--ok)} .self .s-mid{border-color:var(--xp);color:var(--xp)} .self .s-bad{border-color:var(--bad);color:var(--bad)}
+
+/* ── Panel odpowiedzi ── */
+.foot{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom, 0px)}
+.foot .wrap{padding-block:14px;display:grid;gap:12px}
+.foot.ok{background:var(--ok-soft);border-color:transparent}
+.foot.bad{background:var(--bad-soft);border-color:transparent}
+.verdict{display:grid;gap:6px;max-height:46vh;overflow:auto}
+.verdict h3{font-size:20px}
+.foot.ok .verdict h3{color:var(--ok)} .foot.bad .verdict h3{color:var(--bad)}
+.verdict p{margin:0;font-size:15px}
+.verdict .why{font-weight:600}
+.verdict .src-line{font-size:13px;color:var(--muted)}
+.verdict details{font-size:14px}
+.verdict summary{cursor:pointer;font-weight:600;color:var(--muted)}
+.verdict details ul{margin:6px 0 0;padding-left:18px;display:grid;gap:6px}
+.flag{color:var(--xp);font-weight:600}
+
+/* ── Koniec lekcji ── */
+.done-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;padding-block:40px}
+.done-screen h1{font-size:34px}
+.done-screen p{margin:0;color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:420px}
+.tile{padding:12px 8px;border-radius:14px;border:2px solid var(--line);background:var(--surface);display:grid;gap:2px}
+.tile small{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tile b{font-family:var(--display);font-size:26px;font-variant-numeric:tabular-nums}
+.tile.t-xp b{color:var(--xp)} .tile.t-acc b{color:var(--ok)} .tile.t-st b{color:var(--accent)}
+.burst{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;background:var(--xp-soft);color:var(--xp)}
+.burst svg{width:52px;height:52px}
+
+.shake{animation:shake .35s}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:420px){.q{font-size:20px}.nodes .node:nth-child(4n+2){transform:translateX(30px)}.nodes .node:nth-child(4n+4){transform:translateX(-30px)}}
+</style>
+
+<div id="app"></div>
+
+<script src="content.js"></script>
+<script>
+(function(){
+"use strict";
+const C = window.COURSE;
+const $app = document.getElementById("app");
+
+/* ───────── Ikony ───────── */
+const I = {
+  flame:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 3.5 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3-1-3 0-6.5 1-9.5z"/></svg>',
+  bolt:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>',
+  star:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>',
+  chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>',
+  lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  leaf:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 19c0-9 6-14 15-14 0 9-5 15-14 15"/><path d="M5 19 13 11"/></svg>'
+};
+
+/* ───────── Pamięć postępu (localStorage z bezpiecznym fallbackiem) ───────── */
+const KEY = "trening-interwencji-v1";
+const fresh = () => ({ xp:0, streak:0, lastDay:null, daily:{date:null, xp:0}, done:{}, srs:{}, goal:30 });
+let S = fresh();
+try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch(e){}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+
+const pad = n => String(n).padStart(2,"0");
+function dayStr(d){ d = d || new Date(); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+function addDays(str, n){ const [y,m,d] = str.split("-").map(Number); const dt = new Date(y, m-1, d); dt.setDate(dt.getDate()+n); return dayStr(dt); }
+const today = () => dayStr();
+function dailyXp(){ return S.daily.date === today() ? S.daily.xp : 0; }
+function streakNow(){ if (!S.lastDay) return 0; if (S.lastDay === today() || S.lastDay === addDays(today(), -1)) return S.streak; return 0; }
+
+/* Powtórki rozłożone w czasie: pudełka 0–5 */
+const INTERVALS = [0, 1, 3, 7, 16, 35];
+function grade(id, result){ // result: "ok" | "mid" | "bad"
+  const cur = S.srs[id] || { box:0, due:today() };
+  let box = cur.box;
+  if (result === "ok") box = Math.min(5, box + 1);
+  else if (result === "bad") box = 1;
+  else box = Math.max(1, box);
+  S.srs[id] = { box, due: addDays(today(), result === "bad" ? 1 : INTERVALS[box]) };
+}
+function dueIds(){ const t = today(); return Object.keys(S.srs).filter(id => S.srs[id].due <= t && itemById[id]); }
+
+/* Indeksy */
+const itemById = {}, lessonById = {}, unitOfLesson = {};
+C.units.forEach(u => u.lessons.forEach(l => { lessonById[l.id] = l; unitOfLesson[l.id] = u; l.items.forEach(it => { if (it.id) { itemById[it.id] = it; it._unit = u; } }); }));
+const srcName = k => (C.sources[k] && C.sources[k].short) || k;
+
+function plural(n, one, few, many){ if (n === 1) return one; const d = n % 10, t = n % 100; return (d >= 2 && d <= 4 && (t < 12 || t > 14)) ? few : many; }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function shuffle(a){ a = a.slice(); for (let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; }
+
+/* ───────── Widok główny ───────── */
+let tab = "path";
+try { const h = location.hash.slice(1); if (["path","review","sources"].includes(h)) tab = h; } catch(e){}
+
+function topBar(){
+  const st = streakNow();
+  return `<header class="top"><div class="wrap">
+    <div class="brand">Trening <span>Interwencji</span></div>
+    <div class="stat streak ${st? "" : "off"}" title="Passa dni">${I.flame}${st}</div>
+    <div class="stat xp" title="Punkty doświadczenia">${I.bolt}${S.xp}</div>
+  </div></header>`;
+}
+
+function renderHome(){
+  const due = dueIds().length;
+  const dxp = dailyXp();
+  let html = topBar() + `<main class="wrap">
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" data-tab="path" aria-selected="${tab==="path"}">Ścieżka</button>
+      <button class="tab" role="tab" data-tab="review" aria-selected="${tab==="review"}">Powtórki${due? `<span class="badge">${due}</span>`:""}</button>
+      <button class="tab" role="tab" data-tab="sources" aria-selected="${tab==="sources"}">Źródła</button>
+    </nav>`;
+
+  if (tab === "path"){
+    html += `<div class="goal"><div style="display:grid;gap:2px"><small>Cel dzienny</small><b>${Math.min(dxp,S.goal)} / ${S.goal} XP</b></div><div class="bar"><i style="width:${Math.min(100, dxp/S.goal*100)}%"></i></div></div>`;
+    C.units.forEach((u, ui) => {
+      html += `<section class="unit ${u.verify?"verify":""}">
+        <div class="unit-head">
+          <span class="eyebrow">Dział ${ui+1} · ${esc(srcName(u.src))} · ${esc(u.ch)}</span>
+          <h2>${esc(u.title)}</h2><p>${esc(u.sub)}</p>
+          ${u.verify? `<span class="chip">Do weryfikacji z materiałami RMT</span>`:""}
+        </div><div class="nodes">`;
+      u.lessons.forEach(l => {
+        const n = S.done[l.id] || 0;
+        const cnt = l.items.filter(i => i.id).length;
+        html += `<button class="node ${n? "done" : "fresh"}" data-lesson="${l.id}">
+          <span class="disc">${n? I.star : I.chat}</span>
+          <span class="label">${esc(l.title)}</span>
+          <span class="meta">${cnt} ${plural(cnt,"ćwiczenie","ćwiczenia","ćwiczeń")}${n?` · ukończono ×${n}` : ""}</span>
+        </button>`;
+      });
+      html += `</div></section>`;
+    });
+    html += `<h2 class="section-title">Następne ścieżki</h2><p>Odblokują się, gdy dostanę materiały.</p><div class="locked">`;
+    C.upcoming.forEach(p => {
+      html += `<div class="lock-card">${I.lock}<div><h3>${esc(p.title)}</h3><p>${esc(p.sub)}. Potrzebne: ${esc(p.need)}.</p></div></div>`;
+    });
+    html += `</div><h2 class="section-title">Osobna ścieżka</h2><div class="locked"><div class="lock-card">${I.leaf}<div><h3>${esc(C.lifeforce.title)}</h3><p>${esc(C.lifeforce.sub)}. ${esc(C.lifeforce.need)}.</p></div></div></div>`;
+  }
+
+  if (tab === "review"){
+    const counts = [0,0,0,0,0,0];
+    Object.keys(S.srs).forEach(id => { if (itemById[id]) counts[S.srs[id].box]++; });
+    const seen = Object.keys(S.srs).filter(id => itemById[id]).length;
+    html += `<div class="review-hero">
+      <div class="big">${due}</div>
+      <p>${due? plural(due,"ćwiczenie czeka","ćwiczenia czekają","ćwiczeń czeka")+" dziś na powtórkę. Aplikacja wraca do tego, co mylisz, a to, co umiesz, pokazuje coraz rzadziej." : seen? "Na dziś wszystko powtórzone. Możesz poćwiczyć losowo." : "Ukończ pierwszą lekcję, a ćwiczenia zaczną tu wracać."}</p>
+      <button class="primary" id="startReview" ${due||seen? "" : "disabled"}>${due? "Zacznij powtórkę" : "Ćwicz losowo"}</button>
+      <div class="boxes">${counts.map((c,i)=>`<div><b>${c}</b>${i===0?"nowe":i===5?"opanowane":"poz. "+i}</div>`).join("")}</div>
+    </div>`;
+  }
+
+  if (tab === "sources"){
+    html += `<div class="src-list">`;
+    Object.keys(C.sources).forEach(k => {
+      const s = C.sources[k];
+      const label = {ready:"W aplikacji", waiting:"Czeka na materiały", queued:"W kolejce"}[s.status];
+      const desc = {
+        awaken:"Działy 1–7. Lekcje napisane własnymi słowami, z numerem rozdziału przy każdym ćwiczeniu.",
+        rmt:"Dział 8 (sześć potrzeb) to wersja wstępna. Pełna ścieżka powstanie z transkrypcji szkolenia.",
+        yt:"Ćwiczenia „co zrobiłbyś teraz” na prawdziwych interwencjach, z odnośnikiem do minuty filmu.",
+        giant:"Krótkie ćwiczenie dnia.",
+        life:"Osobna ścieżka: energia, zdrowie, stan."
+      }[k] || "";
+      html += `<div class="src"><h3>${esc(s.full)}</h3><span class="pill ${s.status}">${label}</span><p>${esc(desc)}</p></div>`;
+    });
+    html += `</div>
+    <div class="prose"><h3>Jak czytać ćwiczenia</h3>
+      <ol><li>Każde ćwiczenie ma pod spodem źródło i rozdział. Możesz to sprawdzić w swoim egzemplarzu.</li>
+      <li>Elementy oznaczone „do weryfikacji” powstały z mojej ogólnej wiedzy i czekają na Twoje materiały.</li>
+      <li>Postęp zapisuje się w tej przeglądarce, na tym urządzeniu.</li></ol>
+      <div class="btn-row"><button class="btn-ghost danger" id="reset">Wyzeruj postęp</button></div>
+      <p id="resetConfirm" hidden style="margin:10px 0 0;font-size:14px">Na pewno? Stracisz XP, passę i historię powtórek. <button class="btn-ghost danger" id="resetYes">Tak, wyzeruj</button></p>
+    </div>`;
+  }
+
+  html += `<p class="footer">Ćwiczenia są parafrazą koncepcji z podanych źródeł. Do nauki własnej.</p></main>`;
+  $app.innerHTML = html;
+
+  $app.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => { tab = b.dataset.tab; try{ history.replaceState(null,"","#"+tab); }catch(e){} renderHome(); window.scrollTo(0,0); });
+  $app.querySelectorAll("[data-lesson]").forEach(b => b.onclick = () => startLesson(lessonById[b.dataset.lesson]));
+  const sr = document.getElementById("startReview"); if (sr) sr.onclick = startReview;
+  const rs = document.getElementById("reset"); if (rs) rs.onclick = () => { document.getElementById("resetConfirm").hidden = false; };
+  const ry = document.getElementById("resetYes"); if (ry) ry.onclick = () => { S = fresh(); save(); renderHome(); };
+}
+
+/* ───────── Sesja ćwiczeń ───────── */
+let R = null; // stan bieżącej sesji
+
+function startLesson(lesson){
+  const learn = lesson.items.filter(i => !i.id);
+  const ex = lesson.items.filter(i => i.id);
+  // karty teorii przed ćwiczeniami, które po nich następują (zachowujemy kolejność autora)
+  R = { kind:"lesson", lesson, queue: lesson.items.slice(), total: ex.length, doneCount:0, firstTry:{}, correct:0, xp:0, retried:{} };
+  void learn;
+  next();
+}
+function startReview(){
+  let ids = dueIds();
+  let random = false;
+  if (!ids.length){ ids = shuffle(Object.keys(S.srs).filter(id => itemById[id])).slice(0, 8); random = true; }
+  ids = shuffle(ids).slice(0, 12);
+  R = { kind:"review", random, queue: ids.map(id => itemById[id]), total: ids.length, doneCount:0, firstTry:{}, correct:0, xp:0, retried:{} };
+  next();
+}
+
+function next(){
+  if (!R.queue.length) return finish();
+  R.cur = R.queue.shift();
+  R.answered = false;
+  renderItem();
+}
+
+function frame(inner, footInner, footCls){
+  const pct = R.total ? Math.round(R.doneCount / R.total * 100) : 0;
+  $app.innerHTML = `<div class="lesson">
+    <div class="wrap l-top"><button class="x" id="quit" aria-label="Zakończ lekcję">${I.x}</button><div class="progress"><i style="width:${pct}%"></i></div></div>
+    <div class="wrap l-body" id="body">${inner}</div>
+    <div class="foot ${footCls||""}" id="foot"><div class="wrap">${footInner}</div></div>
+  </div>`;
+  document.getElementById("quit").onclick = () => { R = null; renderHome(); };
+  window.scrollTo(0,0);
+}
+
+function dialogHtml(d){
+  if (!d || !d.length) return "";
+  const who = { K:"Klient", C:"Ty", N:"" };
+  return `<div class="dialog">${d.map(([w,t]) => `<div class="line ${w}">${who[w]? `<span class="who">${who[w]}</span>`:""}${esc(t)}</div>`).join("")}</div>`;
+}
+function head(it){
+  return `<div class="tech">${esc(it.tech || "")}</div>${it.ctx? `<div class="ctx">${esc(it.ctx)}</div>`:""}${dialogHtml(it.dialog)}<div class="q">${esc(it.q)}</div>`;
+}
+function srcLine(it){
+  const u = it._unit || {};
+  const flag = (it.verify || u.verify) ? ` · <span class="flag">do weryfikacji</span>` : "";
+  return `<p class="src-line">${esc(srcName(it.src))} · ${esc(it.ch || "")}${flag}</p>`;
+}
+
+function renderItem(){
+  const it = R.cur;
+  if (!it.id) return renderLearn(it);
+  if (it.type === "mc") return renderMC(it);
+  if (it.type === "order") return renderOrder(it);
+  if (it.type === "write") return renderWrite(it);
+}
+
+function renderLearn(it){
+  frame(`<div class="learn"><span class="learn-eyebrow">Teoria</span><h2>${esc(it.title)}</h2>
+    ${(it.body||[]).map(p => `<p>${p}</p>`).join("")}
+    ${it.keys? `<ul>${it.keys.map(k => `<li>${k}</li>`).join("")}</ul>`:""}
+    ${it.note? `<p class="note">${esc(it.note)}</p>`:""}</div>`,
+    `<button class="primary" id="go">Dalej</button>`);
+  const go = document.getElementById("go"); go.onclick = next; go.focus({preventScroll:true});
+}
+
+/* Wybór jednej odpowiedzi */
+function renderMC(it){
+  const opts = shuffle(it.opts.map((o,i) => Object.assign({ i }, o)));
+  R.opts = opts; R.sel = null;
+  frame(head(it) + `<div class="opts">${opts.map((o,k) => `<button class="opt" data-k="${k}" aria-pressed="false"><span class="k">${k+1}</span><span>${esc(o.t)}</span></button>`).join("")}</div>`,
+    `<button class="primary" id="check" disabled>Sprawdź</button>`);
+  const btns = [...$app.querySelectorAll(".opt")];
+  btns.forEach(b => b.onclick = () => { if (R.answered) return; R.sel = +b.dataset.k; btns.forEach(x => x.setAttribute("aria-pressed", x===b)); document.getElementById("check").disabled = false; });
+  document.getElementById("check").onclick = checkMC;
+}
+function checkMC(){
+  const it = R.cur, o = R.opts[R.sel]; R.answered = true;
+  const btns = [...$app.querySelectorAll(".opt")];
+  btns.forEach((b,k) => { b.disabled = true; if (R.opts[k].ok) b.classList.add("right"); else if (k===R.sel) b.classList.add("wrong"); });
+  const right = R.opts.find(x => x.ok);
+  const others = R.opts.filter(x => !x.ok && x !== o && x.why);
+  const body = o.ok
+    ? `<h3>Dobrze!</h3><p>${esc(it.explain)}</p>`
+    : `<h3>Nie tym razem</h3><p class="why">${esc(o.why || "")}</p><p><b>Lepszy ruch:</b> ${esc(right.t)}</p><p>${esc(it.explain)}</p>`;
+  const more = others.length ? `<details><summary>Dlaczego nie pozostałe</summary><ul>${others.map(x => `<li><b>${esc(x.t)}</b> ${esc(x.why)}</li>`).join("")}</ul></details>` : "";
+  result(o.ok ? "ok" : "bad", body + more + srcLine(it));
+}
+
+/* Ułóż w kolejności */
+function renderOrder(it){
+  const pieces = shuffle(it.items.map((t,i) => ({ t, i })));
+  R.pieces = pieces; R.picked = [];
+  frame(head(it) + `<div class="answer" id="ans"></div><div class="pool" id="pool">${pieces.map((p,k) => `<button class="piece" data-k="${k}">${esc(p.t)}</button>`).join("")}</div>`,
+    `<button class="primary" id="check" disabled>Sprawdź</button>`);
+  const pool = document.getElementById("pool"), ans = document.getElementById("ans");
+  function sync(){
+    ans.innerHTML = R.picked.map((k,pos) => `<button class="piece" data-a="${pos}"><span class="n">${pos+1}.</span><span>${esc(R.pieces[k].t)}</span></button>`).join("");
+    pool.querySelectorAll(".piece").forEach(b => b.classList.toggle("used", R.picked.includes(+b.dataset.k)));
+    ans.querySelectorAll(".piece").forEach(b => b.onclick = () => { if (R.answered) return; R.picked.splice(+b.dataset.a, 1); sync(); });
+    document.getElementById("check").disabled = R.picked.length !== R.pieces.length;
+  }
+  pool.querySelectorAll(".piece").forEach(b => b.onclick = () => { if (R.answered || R.picked.includes(+b.dataset.k)) return; R.picked.push(+b.dataset.k); sync(); });
+  document.getElementById("check").onclick = () => {
+    R.answered = true;
+    const ok = R.picked.every((k,pos) => R.pieces[k].i === pos);
+    const body = ok ? `<h3>Dobrze!</h3><p>${esc(it.explain)}</p>`
+      : `<h3>Kolejność się nie zgadza</h3><p><b>Poprawnie:</b></p><ol style="margin:0;padding-left:20px">${it.items.map(t => `<li>${esc(t)}</li>`).join("")}</ol><p>${esc(it.explain)}</p>`;
+    result(ok ? "ok" : "bad", body + srcLine(it));
+  };
+}
+
+/* Odpowiedź pisemna z samooceną */
+function renderWrite(it){
+  frame(head(it) + `<textarea id="ta" placeholder="Napisz swoją odpowiedź tak, jakbyś mówił do klienta…"></textarea>`,
+    `<button class="primary" id="reveal" disabled>Porównaj ze wzorcem</button>`);
+  const ta = document.getElementById("ta"), rv = document.getElementById("reveal");
+  ta.oninput = () => { rv.disabled = ta.value.trim().length < 8; };
+  rv.onclick = () => {
+    const mine = ta.value.trim();
+    document.getElementById("body").innerHTML = head(it) + `
+      <div class="ctx"><b>Twoja odpowiedź:</b><br>${esc(mine).replace(/\n/g,"<br>")}</div>
+      <div class="model"><div class="box"><h3>Przykładowe odpowiedzi</h3><ul>${it.model.map(m => `<li>${esc(m)}</li>`).join("")}</ul></div>
+      <div><p style="margin:0 0 6px;font-weight:600">Sprawdź swoją odpowiedź. Zaznacz, co się w niej znalazło:</p>
+      <div class="checks">${it.hints.map((h,i) => `<label><input type="checkbox" id="h${i}"><span>${esc(h)}</span></label>`).join("")}</div></div></div>`;
+    document.getElementById("foot").innerHTML = `<div class="wrap"><p style="margin:0;font-weight:600">Jak Ci poszło?</p><div class="self">
+      <button class="s-bad" data-g="bad">Nie trafiłem</button><button class="s-mid" data-g="mid">Częściowo</button><button class="s-ok" data-g="ok">Trafiłem</button></div></div>`;
+    document.querySelectorAll("[data-g]").forEach(b => b.onclick = () => { R.answered = true; record(b.dataset.g); next(); });
+    window.scrollTo(0, 0);
+  };
+}
+
+/* Wspólna obsługa wyniku */
+function record(g){
+  const it = R.cur;
+  if (!(it.id in R.firstTry)){
+    R.firstTry[it.id] = g;
+    grade(it.id, g);
+    if (g !== "bad"){ R.correct++; const gain = g === "ok" ? 10 : 5; R.xp += gain; }
+    R.doneCount++;
+  }
+  if (g === "bad" && !R.retried[it.id] && it.type !== "write"){ R.retried[it.id] = true; R.queue.push(it); }
+  save();
+}
+function result(g, html){
+  record(g);
+  const foot = document.getElementById("foot");
+  foot.className = "foot " + g;
+  foot.innerHTML = `<div class="wrap"><div class="verdict">${html}</div><button class="primary ${g}" id="cont">Dalej</button></div>`;
+  if (g === "bad") document.getElementById("body").classList.add("shake");
+  const c = document.getElementById("cont"); c.onclick = next; c.focus({preventScroll:true});
+  const bar = $app.querySelector(".progress i"); if (bar) bar.style.width = Math.round(R.doneCount / R.total * 100) + "%";
+}
+
+/* Koniec sesji */
+function finish(){
+  const t = today();
+  const before = streakNow();
+  if (S.lastDay !== t){ S.streak = (S.lastDay === addDays(t, -1)) ? S.streak + 1 : 1; S.lastDay = t; }
+  if (R.kind === "lesson"){ R.xp += 5; S.done[R.lesson.id] = (S.done[R.lesson.id] || 0) + 1; }
+  S.xp += R.xp;
+  if (S.daily.date !== t) S.daily = { date:t, xp:0 };
+  S.daily.xp += R.xp;
+  save();
+  const acc = R.total ? Math.round(R.correct / R.total * 100) : 100;
+  const title = R.kind === "lesson" ? "Lekcja ukończona" : "Powtórka zrobiona";
+  const msg = acc === 100 ? "Bez jednego błędu." : acc >= 70 ? "Błędne ćwiczenia wrócą jutro w powtórkach." : "Te ćwiczenia wrócą w powtórkach, aż wejdą w krew.";
+  const grew = S.streak > before;
+  $app.innerHTML = `<div class="lesson"><div class="wrap done-screen">
+    <div class="burst">${I.star}</div>
+    <h1>${title}</h1><p>${msg}${grew? ` Passa: ${S.streak} ${S.streak===1?"dzień":"dni"}.`:""}</p>
+    <div class="tiles"><div class="tile t-xp"><small>XP</small><b>+${R.xp}</b></div><div class="tile t-acc"><small>Trafność</small><b>${acc}%</b></div><div class="tile t-st"><small>Passa</small><b>${S.streak}</b></div></div>
+  </div><div class="foot"><div class="wrap"><button class="primary" id="home">Dalej</button></div></div></div>`;
+  const h = document.getElementById("home"); h.onclick = () => { R = null; renderHome(); }; h.focus({preventScroll:true});
+}
+
+/* Klawiatura: 1–4 wybór, Enter dalej */
+document.addEventListener("keydown", e => {
+  if (!R || e.target.tagName === "TEXTAREA") return;
+  if (/^[1-9]$/.test(e.key)){ const b = $app.querySelector(`.opt[data-k="${+e.key-1}"]`); if (b && !b.disabled) b.click(); }
+  if (e.key === "Enter"){ const b = document.getElementById("cont") || document.getElementById("go") || document.getElementById("check") || document.getElementById("home"); if (b && !b.disabled){ e.preventDefault(); b.click(); } }
+});
+
+renderHome();
+})();
+</script>
