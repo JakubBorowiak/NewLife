@@ -14,8 +14,8 @@
 window.COURSE = {
   sources: {
     awaken: { short: "Obudź w sobie olbrzyma", full: "Awaken the Giant Within (Obudź w sobie olbrzyma)", status: "ready" },
-    rmt: { short: "Robbins-Madanes Training", full: "Robbins-Madanes Training", status: "waiting" },
-    yt: { short: "Interwencja z YouTube", full: "Transkrypcje interwencji z YouTube", status: "ready", label: "16 interwencji" },
+    rmt: { short: "RMT: wiedza ogólna", full: "Robbins-Madanes Training (wiedza ogólna)", status: "ready", label: "Wiedza ogólna" },
+    yt: { short: "Interwencja z YouTube", full: "Transkrypcje interwencji z YouTube", status: "ready", label: "17 interwencji" },
     up: { short: "Nieograniczona moc", full: "Unlimited Power (Nieograniczona moc)", status: "ready" },
     nlp: { short: "NLP i Robbins: wiedza ogólna", full: "Techniki NLP i narzędzia Robbinsa (wiedza ogólna)", status: "ready" },
     giant: { short: "Olbrzymie kroki", full: "Giant Steps (Olbrzymie kroki)", status: "queued" },
@@ -905,6 +905,62 @@ window.COURSE = {
               src: "nlp", ch: "Kotwice"
             }
           ]
+        },
+        {
+          id: "n2l2", title: "Swish kinestetyczny",
+          items: [
+            { type: "learn", title: "Swish na uczucie, nie na obraz",
+              body: [
+                "Klasyczny swish pracuje z obrazami. <b>Swish kinestetyczny</b> pracuje z uczuciem w ciele: klient lokalizuje uczucie problemu, opisuje jego cechy, potem lokalizuje uczucie zasobu i jego cechy, a na koniec „przelewa” zasób na problem, aż problem się rozpuści.",
+                "<b>Kiedy:</b> klient nie ma wyraźnego obrazu ani wyzwalacza, tylko ciężar, ucisk albo „gulę” w ciele (złość, smutek, poczucie winy). <b>Kiedy nie:</b> nawyk z wyraźnym wyzwalaczem wzrokowym, bo wtedy lepszy jest klasyczny swish."
+              ],
+              keys: [
+                "<b>Cechy uczucia:</b> miejsce w ciele, rozmiar, kształt, faktura, temperatura, kierunek ruchu (wciska się, płynie do przodu).",
+                "<b>Nakładanie zmysłów:</b> pytasz też o kolor i dźwięk uczucia. Dzięki temu masz kilka „uchwytów”, którymi możesz zmieniać to uczucie.",
+                "<b>Test zasobu przed zmianą:</b> zasób musi mieć 9–10 na 10, inaczej nie przeważy problemu.",
+                "<b>Skalowanie po zmianie:</b> „Ile teraz od 0 do 10? Co by to podniosło o jeden?”"
+              ],
+              note: "Ten opis to synteza znanej techniki NLP i omówienia interwencji Robbinsa z Tammy (patrz: Prawdziwe interwencje)."
+            },
+            { id: "n2-5", type: "order", tech: "Swish kinestetyczny",
+              q: "Ułóż kroki swisha kinestetycznego.",
+              items: ["Zlokalizuj uczucie problemu w ciele i opisz jego cechy (kolor, rozmiar, faktura, dźwięk, co mówi)", "Przerwij stan: wstrząśnij ciałem", "Przywołaj moment pełnej siły i zlokalizuj to uczucie w ciele z jego cechami", "Sprawdź siłę zasobu od 0 do 10 (musi być 9–10)", "Przenieś zasób na miejsce problemu: otocz problem, zmniejsz go do kropki, wypchnij i wypełnij to miejsce zasobem", "Zmierz od 0 do 10 i dokładaj, aż dojdzie do 10"],
+              explain: "Kolejność ma znaczenie: stan problemu, przerwanie, stan zasobu, test siły zasobu, połączenie, test. Bez przerwania stanu oba uczucia się zmieszają, zanim zbudujesz zasób.",
+              src: "nlp", ch: "Swish kinestetyczny"
+            },
+            { id: "n2-6", type: "mc", tech: "Dobór techniki: swish kinestetyczny",
+              dialog: [["K", "Nie mam żadnego obrazu. Po prostu jak myślę o rozmowie z bratem, czuję taki ciężar w żołądku."]],
+              q: "Którą wersję swisha wybierasz?",
+              opts: [
+                { t: "Kinestetyczną: klient opisuje ciężar w żołądku i jego cechy, a potem przenosisz na to miejsce uczucie zasobu.", ok: true },
+                { t: "Klasyczną, wzrokową: każesz mu wymyślić obraz wyzwalacza.", why: "Klient sam mówi, że nie ma obrazu. Pracuj w systemie, w którym przeżywa problem." },
+                { t: "Żadną. Najpierw musi zobaczyć obraz.", why: "Nie trzeba. Uczucie w ciele to pełnoprawny punkt wejścia." }
+              ],
+              explain: "Dopasuj technikę do tego, jak klient przeżywa problem. Ciężar w żołądku to wejście kinestetyczne.",
+              src: "nlp", ch: "Swish kinestetyczny"
+            },
+            { id: "n2-7", type: "mc", tech: "Nakładanie zmysłów",
+              q: "Klientka mówi, że złość czuje w klatce piersiowej. Po co pytać ją, jaki ta złość ma kolor?",
+              opts: [
+                { t: "Żeby dać uczuciu drugi kanał (obraz). Obraz łatwiej zmienić (zmniejszyć, rozjaśnić, oddalić), a razem z nim zmienia się uczucie.", ok: true },
+                { t: "Żeby sprawdzić, czy jest wzrokowcem.", why: "Chodzi o to, żeby mieć więcej uchwytów do zmiany uczucia, a nie o diagnozę typu." },
+                { t: "Bez powodu, to taki rytuał.", why: "To konkretne narzędzie: nakładanie zmysłów." }
+              ],
+              explain: "Każdy dodany zmysł (kolor, dźwięk, słowa) to kolejny uchwyt. Słowa, które pojawią się przy zasobie (np. „lekkość”, „tak”), stają się też kotwicami, których używasz w trakcie zmiany.",
+              src: "nlp", ch: "Swish kinestetyczny"
+            },
+            { id: "n2-8", type: "mc", tech: "Przygotowanie gruntu",
+              dialog: [["K", "Nie wiem, czego chcę w związku z mamą."]],
+              q: "Robbins w takiej sytuacji czasem prosi: „Opisz mi pracę z piekła”, a potem „pracę z nieba”. Po co?",
+              opts: [
+                { t: "Złość na „piekło” wyzwala energię i jasność. Potem przy tej podniesionej energii przechodzisz do przeciwieństwa i klient łatwiej mówi, czego chce. Do tego przenosi to z bolesnego tematu na równoległy (metafora).", ok: true },
+                { t: "Żeby odwrócić jego uwagę od mamy na zawsze.", why: "To przygotowanie, a nie zmiana tematu. Potem wracasz do relacji z mamą." },
+                { t: "Żeby sprawdzić, czy lubi swoją pracę.", why: "Praca jest tu tylko metaforą relacji." }
+              ],
+              explain: "Ten wstęp już zapowiada zmianę: od piekła do nieba, czyli kontrast stanu problemu i stanu pożądanego, tak jak w samym swishu.",
+              src: "nlp", ch: "Swish kinestetyczny"
+            }
+          ]
         }
       ]
     },
@@ -1117,7 +1173,7 @@ window.COURSE = {
 
     /* ───────────────────────── 8. SZEŚĆ POTRZEB (RMT) ───────────────────────── */
     {
-      id: "u8", title: "Sześć potrzeb człowieka", sub: "Fundament RMT", src: "rmt", ch: "Wersja wstępna", verify: true,
+      id: "u8", title: "Sześć potrzeb człowieka", sub: "Fundament RMT", src: "rmt", ch: "Wiedza ogólna", verify: true,
       lessons: [
         {
           id: "u8l1", title: "Jakie potrzeby to zaspokaja?",
@@ -1139,7 +1195,7 @@ window.COURSE = {
                 { t: "Tylko różnorodność.", why: "Różnorodność może się pojawiać, ale mocniej działają więź, znaczenie i pewność." }
               ],
               explain: "Trzy potrzeby naraz to silny wzorzec. Nie chodzi o świadomą manipulację, tylko o to, że ten sposób działa. Zmiana wymaga innego sposobu na uwagę i znaczenie.",
-              src: "rmt", ch: "Wersja wstępna"
+              src: "rmt", ch: "Wiedza ogólna"
             },
             { id: "u8-2", type: "mc", tech: "Diagnoza potrzeb", verify: true,
               dialog: [["K", "My się z żoną ciągle kłócimy. A potem jest godzenie się i jest super. I znowu od nowa."]],
@@ -1150,7 +1206,7 @@ window.COURSE = {
                 { t: "Żadnych, to po prostu niedopasowanie charakterów.", why: "W tym modelu każde powtarzane zachowanie zaspokaja jakieś potrzeby. Inaczej by się nie powtarzało." }
               ],
               explain: "Gdy związek daje mało różnorodności i więzi na co dzień, kłótnia i godzenie dają obie na wysokim poziomie. Coach szuka zdrowszych źródeł intensywności i bliskości.",
-              src: "rmt", ch: "Wersja wstępna"
+              src: "rmt", ch: "Wiedza ogólna"
             },
             { id: "u8-3", type: "mc", tech: "Zmiana pojazdu", verify: true,
               q: "Odkryłeś, że wieczorne picie daje klientowi pewność (rytuał), różnorodność (rozluźnienie) i więź (kumple w barze). Co robisz?",
@@ -1160,7 +1216,7 @@ window.COURSE = {
                 { t: "Tłumaczysz mu, jak alkohol szkodzi.", why: "Wiedza nie konkuruje z trzema zaspokojonymi potrzebami." }
               ],
               explain: "To ta sama logika co krok 4 NAC: nowa alternatywa musi dawać to, co dawał stary wzorzec. Teoria sześciu potrzeb mówi Ci dokładnie, co to jest.",
-              src: "rmt", ch: "Wersja wstępna"
+              src: "rmt", ch: "Wiedza ogólna"
             }
           ]
         }
@@ -2104,6 +2160,93 @@ window.COURSE = {
       ]
     },
 
+    /* ───────── Tammy: swish kinestetyczny ───────── */
+    {
+      id: "yt-tammy", title: "Tammy: swish kinestetyczny", sub: "Relacja z mamą · uczucie w ciele · zasób", len: "omówienie NLP",
+      lessons: [
+        {
+          id: "ta-l1", title: "Uczucie problemu",
+          items: [
+            { type: "learn", title: "Kontekst",
+              body: ["Tammy mówi o złości i bierno-agresywnych zachowaniach w relacji z mamą. Robbins prowadzi ją przez swish kinestetyczny. Ta lekcja opiera się na transkrypcji z komentarzem trenera NLP, który rozkłada interwencję na kroki."]
+            },
+            { id: "ta-1", type: "mc", tech: "Lokalizacja uczucia",
+              q: "Jak Robbins zaczyna pracę ze złością Tammy?",
+              opts: [
+                { t: "Pyta, gdzie w ciele najmocniej siedzi to uczucie, i prosi, żeby dotknęła tego miejsca.", ok: true },
+                { t: "Pyta, co konkretnie zrobiła mama.", why: "Historia wpędziłaby ją w opowieść o mamie. Robbins od razu przechodzi do uczucia w ciele." },
+                { t: "Każe jej wyobrazić sobie mamę.", why: "To wejście wzrokowe. Tu pracuje z uczuciem." }
+              ],
+              tony: "Tammy wskazała klatkę piersiową. Potem Robbins zbierał cechy: kolor (czarny), rozmiar (duży), faktura (gumowata, dusząca). Na koniec poprosił o dźwięk: „Nie myśl, dźwięk przychodzi z nieświadomości”. Kazał jej wydać ten dźwięk na głos, tak głośno, jak jest w środku, i zrobił to razem z nią i z całą salą.",
+              explain: "Każda cecha to uchwyt do zmiany. Wydanie dźwięku na głos wyprowadza emocję z ciała i jednocześnie pokazuje skalę stanu.",
+              src: "yt", ch: "Tammy, krok 1"
+            },
+            { id: "ta-2", type: "mc", tech: "Bycie przyczyną",
+              dialog: [["C", "Gdyby to uczucie coś mówiło, co by mówiło?"], ["K", "„Mylisz się.” Wrednym tonem."], ["C", "Do kogo to mówi?"], ["K", "Do mnie."]],
+              q: "Co Robbins robi z tą odpowiedzią?",
+              opts: [
+                { t: "Pokazuje, że problem nie leży głównie w mamie, tylko w tym, jak Tammy mówi do siebie. Przenosi ją ze skutku na przyczynę, bo tam ma wpływ.", ok: true },
+                { t: "Mówi, że to mama ją tego nauczyła.", why: "To prawdopodobnie prawda, ale zostawia ją w roli skutku, bez wpływu." },
+                { t: "Pomija to i przechodzi dalej.", why: "To jeden z najważniejszych momentów: zmiana z „mama mi to robi” na „ja to sobie robię”." }
+              ],
+              tony: "Powiedział: „Czyli tam jest problem. Nie tyle w mamie, co w tobie, bo oczekujesz od siebie, że nie będziesz mieć tych uczuć”. Gdy wewnętrzny głos dodał „możesz lepiej”, Robbins się zgodził („To prawda, i możemy to robić łagodnie dla ciebie”). Uznał pozytywną intencję głosu i zmienił jego ton.",
+              explain: "Jeśli przyczyna jest na zewnątrz, klient nie ma wyboru. Gdy przenosisz ją do środka, klient może coś zmienić. Uznanie pozytywnej intencji krytyka rozbraja go bez walki.",
+              src: "yt", ch: "Tammy, krok 3"
+            }
+          ]
+        },
+        {
+          id: "ta-l2", title: "Zasób i swish",
+          items: [
+            { id: "ta-3", type: "mc", tech: "Przerwanie i zasób",
+              q: "Robbins ma już pełny opis uczucia problemu. Co robi dalej?",
+              opts: [
+                { t: "Przerywa stan („wstrząśnij ciałem!”) i prosi o moment, w którym czuła się silna i gotowa na wyzwanie.", ok: true },
+                { t: "Od razu zaczyna zmniejszać czarną plamę.", why: "Bez zasobu nie ma czym jej zastąpić." },
+                { t: "Prosi, żeby głębiej poczuła złość.", why: "Problem już jest dobrze opisany. Wzmacnianie go nic nie da." }
+              ],
+              tony: "Tammy przypomniała sobie moment założenia firmy internetowej: „Byłam pewna”. Robbins znów zbierał cechy: miejsce (ramiona), kierunek ruchu (w górę i do przodu, a problem „wciska się do środka”), waga (lekkie), faktura (miękki materiał), dźwięk i słowo („tak!”, które powtórzyła głośno kilka razy). Na koniec sprawdził: ile od 0 do 10? Dziesięć.",
+              explain: "Kierunek ruchu to bardzo mocna cecha uczucia. Kontrast „wciska się do środka” i „płynie do przodu” to dokładnie to, co zmienia swish.",
+              src: "yt", ch: "Tammy, krok 4"
+            },
+            { id: "ta-4", type: "mc", tech: "Test siły zasobu",
+              q: "Dlaczego Robbins pyta o siłę zasobu od 0 do 10 przed zrobieniem swisha?",
+              opts: [
+                { t: "Bo zasób musi być mocniejszy od problemu, żeby go przeważyć. Przy 5–6 na 10 problem może wygrać.", ok: true },
+                { t: "Żeby Tammy poczuła się doceniona.", why: "To kontrola jakości przed zmianą, a nie komplement." },
+                { t: "Bo zawsze trzeba coś zmierzyć.", why: "Chodzi o konkretny powód: siła zasobu decyduje o skuteczności." }
+              ],
+              explain: "Ta sama zasada co przy zapadaniu kotwic: zasób musi być silniejszy niż problem.",
+              src: "yt", ch: "Tammy, krok 4"
+            },
+            { id: "ta-5", type: "mc", tech: "Swish kinestetyczny",
+              q: "Jak Robbins łączy oba stany?",
+              opts: [
+                { t: "Każe jej wziąć lekkość z ramion w dłonie, otoczyć nią czarną plamę przy sercu, zmniejszyć ją do kropki i wypchnąć w słońce. Miejsce wypełnia światło i rytmiczne „tak, tak, tak”, aż w klatce jest to samo uczucie co w ramionach.", ok: true },
+                { t: "Mówi jej, żeby pomyślała pozytywnie o mamie.", why: "To nie zmienia zapisu uczucia w ciele." },
+                { t: "Prosi, żeby na zmianę czuła złość i lekkość, aż się wyrówna.", why: "Przeskakiwanie między stanami to nie swish. Zasób musi pochłonąć problem." }
+              ],
+              tony: "Używał słów z zasobu jako kotwic: „lekkie”, „światło”, „tak”, „do przodu”, „znajdę drogę”. Kazał jej przelewać zasób dłońmi, aż stare uczucie zniknie. Komentator zwraca uwagę, że słowo „lekkie” działa jednocześnie jako odczucie i jako obraz (jasność), dlatego jest tak skuteczne.",
+              explain: "Swish kinestetyczny łączy oba uczucia jednocześnie, tak żeby zasób przejął miejsce problemu. Słowa klienta z fazy zasobu są tu najlepszym językiem.",
+              src: "yt", ch: "Tammy, krok 5"
+            },
+            { id: "ta-6", type: "mc", tech: "Skalowanie i tożsamość",
+              dialog: [["C", "Kiedy teraz myślisz o tej sytuacji, ile od 0 do 10?"], ["K", "Osiem."]],
+              q: "Co robisz?",
+              opts: [
+                { t: "„Co by to podniosło do dziewięciu? Jaka myśl, uczucie albo słowo?” A potem: „Co z dziewięciu robi dziesięć?”", ok: true },
+                { t: "„Osiem to świetny wynik, kończymy.”", why: "Robbins nie kończy na ośmiu. Każdy punkt wyżej to trwalsza zmiana." },
+                { t: "Robisz cały swish od nowa.", why: "Nie trzeba. Wystarczy dołożyć brakujący element." }
+              ],
+              tony: "Tammy: „Jest łagodniej. To nie »możesz lepiej«, tylko łagodność”. To dało dziewięć. Na dziesięć: „Ta złość to nie jestem ja”. Robbins od razu zapytał: „A kim jesteś naprawdę? Zapytaj serce”. Tammy: „Na poziomie duszy jestem dzieckiem Boga”.",
+              explain: "Skalowanie pokazuje, czego brakuje do pełnej zmiany. Ostatni punkt często przychodzi na poziomie tożsamości („to nie jestem ja”), a pytanie „kim jesteś naprawdę?” ją utrwala.",
+              src: "yt", ch: "Tammy, krok 5"
+            }
+          ]
+        }
+      ]
+    },
+
     /* ───────── Debbie ───────── */
     {
       id: "yt-debbie", title: "Debbie: życie nie swoim życiem", sub: "Termostat tożsamości · czyjej miłości pragnęłaś · ojciec", len: "film do ustalenia",
@@ -2222,7 +2365,6 @@ window.COURSE = {
 
   /* Ścieżki, które czekają na materiały */
   upcoming: [
-    { id: "p-rmt", title: "Interwencje RMT", sub: "Prawdziwe dialogi ze szkolenia", src: "rmt", need: "Transkrypcje modułów szkolenia (pliki .txt)" },
     { id: "p-yt", title: "Kolejne interwencje z YouTube", sub: "12 filmów z Twojej playlisty", src: "yt", need: "transkrypcje filmów 02–13, najlepiej ze znacznikami czasu" },
     { id: "p-giant", title: "Olbrzymie kroki", sub: "Ćwiczenie dnia", src: "giant", need: "Zdjęcia lub skany wybranych stron" }
   ],

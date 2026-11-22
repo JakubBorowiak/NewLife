@@ -335,7 +335,7 @@ function renderHome(){
         <div class="unit-head">
           <span class="eyebrow">Dział ${ui+1} · ${esc(srcName(u.src))} · ${esc(u.ch)}</span>
           <h2>${esc(u.title)}</h2><p>${esc(u.sub)}</p>
-          ${u.verify? `<span class="chip">Do weryfikacji z materiałami RMT</span>`:""}
+          ${u.verify? `<span class="chip">Z wiedzy ogólnej o RMT</span>`:""}
         </div><div class="nodes">`;
       u.lessons.forEach(l => { html += nodeHtml(l); });
       html += `</div></section>`;
@@ -402,7 +402,7 @@ function renderHome(){
       const label = s.label || {ready:"W aplikacji", waiting:"Czeka na materiały", queued:"W kolejce"}[s.status];
       const desc = {
         awaken:"Działy 1–7. Lekcje napisane własnymi słowami, z numerem rozdziału przy każdym ćwiczeniu.",
-        rmt:"Dział 8 (sześć potrzeb) to wersja wstępna. Pełna ścieżka powstanie z transkrypcji szkolenia.",
+        rmt:"Dział o sześciu potrzebach powstał z mojej ogólnej wiedzy o RMT. Materiałów ze szkolenia nie ma w aplikacji.",
         yt:"Interwencje z Twoich transkrypcji: Callum, Lesley, Chen, Tina Marie, Andrea, Eileen, Pixie, Terry i O’Neal, Jackie i Fabio, Laura, Josh, David, Anna i inne.",
         giant:"Krótkie ćwiczenie dnia.",
         nlp:"Działy o technikach NLP i narzędziach Robbinsa, napisane z mojej wiedzy. Przy każdej technice: kiedy jej użyć, a kiedy nie.",
@@ -415,7 +415,7 @@ function renderHome(){
     html += `</div>
     <div class="prose"><h3>Jak czytać ćwiczenia</h3>
       <ol><li>Każde ćwiczenie ma pod spodem źródło i rozdział. Możesz to sprawdzić w swoim egzemplarzu.</li>
-      <li>Elementy oznaczone „do weryfikacji” powstały z mojej ogólnej wiedzy i czekają na Twoje materiały.</li>
+      <li>Elementy oznaczone „z wiedzy ogólnej” powstały z mojej wiedzy, a nie z Twoich materiałów.</li>
       <li>Postęp zapisuje się w tej przeglądarce, na tym urządzeniu.</li></ol>
       <div class="btn-row"><button class="btn-ghost danger" id="reset">Wyzeruj postęp</button></div>
       <p id="resetConfirm" hidden style="margin:10px 0 0;font-size:14px">Na pewno? Stracisz XP, passę i historię powtórek. <button class="btn-ghost danger" id="resetYes">Tak, wyzeruj</button></p>
@@ -523,7 +523,7 @@ function head(it){
 }
 function srcLine(it){
   const u = it._unit || {};
-  const flag = (it.verify || u.verify) ? ` · <span class="flag">do weryfikacji</span>` : "";
+  const flag = (it.verify || u.verify) ? ` · <span class="flag">z wiedzy ogólnej</span>` : "";
   const vid = u.video ? ` · <a href="${esc(u.video)}" target="_blank" rel="noopener">film</a>` : "";
   return `<p class="src-line">${esc(srcName(it.src))} · ${esc(it.ch || "")}${vid}${flag}</p>`;
 }
