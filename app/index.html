@@ -185,6 +185,23 @@ textarea{width:100%;min-height:130px;padding:12px 14px;border-radius:14px;border
 .verdict summary{cursor:pointer;font-weight:600;color:var(--muted)}
 .verdict details ul{margin:6px 0 0;padding-left:18px;display:grid;gap:6px}
 .flag{color:var(--xp);font-weight:600}
+.eyebrow-dark{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.review-hero .mini{font-size:13px}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.mode{display:grid;gap:4px;text-align:left;padding:16px;border-radius:var(--r);background:var(--surface);border:2px solid var(--line);box-shadow:0 3px 0 var(--line)}
+.mode b{font-family:var(--display);font-size:18px}
+.mode span{font-size:13px;color:var(--muted)}
+.mode:not(:disabled):hover{border-color:var(--accent)}
+.mode:disabled{opacity:.55;cursor:default}
+.case-list{display:grid;gap:8px;margin-top:10px}
+.case{display:grid;gap:2px;text-align:left;padding:12px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.case:hover{border-color:var(--accent)}
+.case.done{border-left:4px solid var(--ok)}
+.case-t{font-weight:600}
+.case-m{font-size:13px;color:var(--muted)}
+.counter{font-size:13px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.line.P{background:var(--xp-soft);border-bottom-left-radius:4px;align-self:flex-start}
+@media (max-width:420px){.mode-grid{grid-template-columns:1fr}}
 .verdict a,.vlink{color:inherit;font-weight:600;text-underline-offset:3px}
 .vlink{font-size:13px;opacity:.95;overflow-wrap:anywhere}
 .tony{order:2;padding:10px 12px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
@@ -215,6 +232,8 @@ textarea{width:100%;min-height:130px;padding:12px 14px;border-radius:14px;border
 <div id="app"></div>
 
 <script src="content.js"></script>
+<script src="cases.js"></script>
+<script src="cases2.js"></script>
 <script>
 (function(){
 "use strict";
@@ -235,7 +254,7 @@ const I = {
 
 /* ───────── Pamięć postępu (localStorage z bezpiecznym fallbackiem) ───────── */
 const KEY = "trening-interwencji-v1";
-const fresh = () => ({ xp:0, streak:0, lastDay:null, daily:{date:null, xp:0}, done:{}, srs:{}, goal:30 });
+const fresh = () => ({ xp:0, streak:0, lastDay:null, daily:{date:null, xp:0}, done:{}, srs:{}, goal:30, cases:{} });
 let S = fresh();
 try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch(e){}
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
@@ -263,6 +282,12 @@ function dueIds(){ const t = today(); return Object.keys(S.srs).filter(id => S.s
 const itemById = {}, lessonById = {}, unitOfLesson = {};
 (C.interventions || []).forEach(v => { v.src = "yt"; v.ch = v.len; });
 C.units.concat(C.interventions || []).forEach(u => u.lessons.forEach(l => { lessonById[l.id] = l; unitOfLesson[l.id] = u; l.items.forEach(it => { if (it.id) { itemById[it.id] = it; it._unit = u; } }); }));
+const CASES = window.CASES || [];
+const caseById = {};
+CASES.forEach(cs => { caseById[cs.id] = cs; cs.src = "sim"; cs.steps.forEach((st, i) => { st.id = cs.id + "-" + (i+1); st.src = "sim"; st.ch = cs.title; st._unit = cs; itemById[st.id] = st; }); });
+C.sources.sim = C.sources.sim || { short:"Symulator", full:"Symulator interwencji (przypadki zmyślone)", status:"ready" };
+const lessonIds = () => C.units.concat(C.interventions || []).flatMap(u => u.lessons.flatMap(l => l.items.filter(i => i.id).map(i => i.id)));
+const doneLessonIds = () => C.units.concat(C.interventions || []).flatMap(u => u.lessons.filter(l => S.done[l.id]).flatMap(l => l.items.filter(i => i.id).map(i => i.id)));
 const srcName = k => (C.sources[k] && C.sources[k].short) || k;
 
 function plural(n, one, few, many){ if (n === 1) return one; const d = n % 10, t = n % 100; return (d >= 2 && d <= 4 && (t < 12 || t > 14)) ? few : many; }
@@ -271,7 +296,7 @@ function shuffle(a){ a = a.slice(); for (let i=a.length-1;i>0;i--){ const j = Ma
 
 /* ───────── Widok główny ───────── */
 let tab = "path";
-try { const h = location.hash.slice(1); if (["path","review","sources"].includes(h)) tab = h; } catch(e){}
+try { let h = location.hash.slice(1); if (h === "review") h = "train"; if (["path","train","sim","sources"].includes(h)) tab = h; } catch(e){}
 
 function topBar(){
   const st = streakNow();
@@ -298,7 +323,8 @@ function renderHome(){
   let html = topBar() + `<main class="wrap">
     <nav class="tabs" role="tablist">
       <button class="tab" role="tab" data-tab="path" aria-selected="${tab==="path"}">Ścieżka</button>
-      <button class="tab" role="tab" data-tab="review" aria-selected="${tab==="review"}">Powtórki${due? `<span class="badge">${due}</span>`:""}</button>
+      <button class="tab" role="tab" data-tab="train" aria-selected="${tab==="train"}">Trening${due? `<span class="badge">${due}</span>`:""}</button>
+      <button class="tab" role="tab" data-tab="sim" aria-selected="${tab==="sim"}">Symulator</button>
       <button class="tab" role="tab" data-tab="sources" aria-selected="${tab==="sources"}">Źródła</button>
     </nav>`;
 
@@ -333,16 +359,40 @@ function renderHome(){
     html += `</div><h2 class="section-title">Osobna ścieżka</h2><div class="locked"><div class="lock-card">${I.leaf}<div><h3>${esc(C.lifeforce.title)}</h3><p>${esc(C.lifeforce.sub)}. ${esc(C.lifeforce.need)}.</p></div></div></div>`;
   }
 
-  if (tab === "review"){
+  if (tab === "train"){
     const counts = [0,0,0,0,0,0];
     Object.keys(S.srs).forEach(id => { if (itemById[id]) counts[S.srs[id].box]++; });
-    const seen = Object.keys(S.srs).filter(id => itemById[id]).length;
+    const nDone = doneLessonIds().length, nAll = lessonIds().length;
     html += `<div class="review-hero">
+      <span class="eyebrow-dark">Powtórki na dziś</span>
       <div class="big">${due}</div>
-      <p>${due? plural(due,"ćwiczenie czeka","ćwiczenia czekają","ćwiczeń czeka")+" dziś na powtórkę. Aplikacja wraca do tego, co mylisz, a to, co umiesz, pokazuje coraz rzadziej." : seen? "Na dziś wszystko powtórzone. Możesz poćwiczyć losowo." : "Ukończ pierwszą lekcję, a ćwiczenia zaczną tu wracać."}</p>
-      <button class="primary" id="startReview" ${due||seen? "" : "disabled"}>${due? "Zacznij powtórkę" : "Ćwicz losowo"}</button>
+      <p>${due? plural(due,"ćwiczenie czeka","ćwiczenia czekają","ćwiczeń czeka")+" na powtórkę. Wraca to, co mylisz, a to, co umiesz, pokazuje się coraz rzadziej." : "Na dziś wszystko powtórzone."}</p>
+      <button class="primary" id="startReview" ${due? "" : "disabled"}>Zacznij powtórkę</button>
       <div class="boxes">${counts.map((c,i)=>`<div><b>${c}</b>${i===0?"nowe":i===5?"opanowane":"poz. "+i}</div>`).join("")}</div>
+    </div>
+    <h2 class="section-title">Trening losowy</h2><p>Ćwiczenia z różnych działów w losowej kolejności, bez końca. Nie przesuwa ścieżki, tylko utrwala. Kończysz, kiedy chcesz.</p>
+    <div class="mode-grid">
+      <button class="mode" id="rndDone" ${nDone? "" : "disabled"}><b>Z przerobionych</b><span>${nDone? `${nDone} ${plural(nDone,"ćwiczenie","ćwiczenia","ćwiczeń")} z ukończonych lekcji` : "Ukończ najpierw jakąś lekcję"}</span></button>
+      <button class="mode" id="rndAll"><b>Ze wszystkich</b><span>${nAll} ćwiczeń z całej aplikacji, także nowe</span></button>
     </div>`;
+  }
+
+  if (tab === "sim"){
+    const tags = [...new Set(CASES.map(c => c.tag))];
+    const doneN = CASES.filter(c => S.cases[c.id]).length;
+    html += `<div class="review-hero">
+      <span class="eyebrow-dark">Symulator interwencji</span>
+      <p>Zmyślone, realistyczne przypadki. Czytasz dialog i decydujesz: co robisz, co mówisz, jaki wzorzec widzisz. Przypadek ma od jednego do kilku momentów decyzji.</p>
+      <button class="primary" id="simRandom" ${CASES.length? "" : "disabled"}>Losowe przypadki bez końca</button>
+      <p class="mini">${CASES.length} przypadków · ukończone: ${doneN}</p>
+    </div>`;
+    tags.forEach(tg => {
+      html += `<h2 class="section-title">${esc(tg)}</h2><div class="case-list">`;
+      CASES.filter(c => c.tag === tg).forEach(c => {
+        html += `<button class="case ${S.cases[c.id]? "done":""}" data-case="${c.id}"><span class="case-t">${esc(c.title)}</span><span class="case-m">${esc(c.who)} · ${c.steps.length} ${plural(c.steps.length,"decyzja","decyzje","decyzji")}${S.cases[c.id]? " · ✓":""}</span></button>`;
+      });
+      html += `</div>`;
+    });
   }
 
   if (tab === "sources"){
@@ -355,6 +405,9 @@ function renderHome(){
         rmt:"Dział 8 (sześć potrzeb) to wersja wstępna. Pełna ścieżka powstanie z transkrypcji szkolenia.",
         yt:"Interwencje z Twoich transkrypcji: Callum, Lesley, Chen, Tina Marie, Andrea, Eileen, Pixie, Terry i O’Neal, Jackie i Fabio, Laura, Josh, David, Anna i inne.",
         giant:"Krótkie ćwiczenie dnia.",
+        nlp:"Działy o technikach NLP i narzędziach Robbinsa, napisane z mojej wiedzy. Przy każdej technice: kiedy jej użyć, a kiedy nie.",
+        sim:"Przypadki i dialogi wymyślone do ćwiczeń, oparte na typowych sytuacjach w gabinecie coacha.",
+        up:"Działy o kontakcie, oporze, reframingu, kotwicach i metaprogramach, z numerami rozdziałów.",
         life:"Osobna ścieżka: energia, zdrowie, stan."
       }[k] || "";
       html += `<div class="src"><h3>${esc(s.full)}</h3><span class="pill ${s.status}">${label}</span><p>${esc(desc)}</p></div>`;
@@ -375,6 +428,10 @@ function renderHome(){
   $app.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => { tab = b.dataset.tab; try{ history.replaceState(null,"","#"+tab); }catch(e){} renderHome(); window.scrollTo(0,0); });
   $app.querySelectorAll("[data-lesson]").forEach(b => b.onclick = () => startLesson(lessonById[b.dataset.lesson]));
   const sr = document.getElementById("startReview"); if (sr) sr.onclick = startReview;
+  const rd = document.getElementById("rndDone"); if (rd) rd.onclick = () => startEndless("done");
+  const ra = document.getElementById("rndAll"); if (ra) ra.onclick = () => startEndless("all");
+  const sm = document.getElementById("simRandom"); if (sm) sm.onclick = () => startCase(null);
+  $app.querySelectorAll("[data-case]").forEach(b => b.onclick = () => startCase(caseById[b.dataset.case]));
   const rs = document.getElementById("reset"); if (rs) rs.onclick = () => { document.getElementById("resetConfirm").hidden = false; };
   const ry = document.getElementById("resetYes"); if (ry) ry.onclick = () => { S = fresh(); save(); renderHome(); };
 }
@@ -392,34 +449,73 @@ function startLesson(lesson){
 }
 function startReview(){
   let ids = dueIds();
-  let random = false;
-  if (!ids.length){ ids = shuffle(Object.keys(S.srs).filter(id => itemById[id])).slice(0, 8); random = true; }
+  if (!ids.length) return;
   ids = shuffle(ids).slice(0, 12);
-  R = { kind:"review", random, queue: ids.map(id => itemById[id]), total: ids.length, doneCount:0, firstTry:{}, correct:0, xp:0, retried:{} };
+  R = { kind:"review", queue: ids.map(id => itemById[id]), total: ids.length, doneCount:0, firstTry:{}, correct:0, xp:0, retried:{} };
   next();
 }
+/* Trening losowy bez końca */
+function startEndless(scope){
+  const pool = scope === "done" ? doneLessonIds() : lessonIds();
+  if (!pool.length) return;
+  R = { kind:"endless", scope, pool, queue:[], total:0, doneCount:0, firstTry:{}, correct:0, xp:0, retried:{}, last:null };
+  next();
+}
+function refillEndless(){
+  let ids = shuffle(R.pool);
+  if (ids.length > 1 && ids[0] === R.last) ids.push(ids.shift());
+  R.firstTry = {}; R.retried = {};
+  R.queue = ids.map(id => itemById[id]);
+}
+/* Symulator: jeden przypadek albo losowe bez końca */
+function caseQueue(cs){
+  const card = { title: cs.title, eyebrow: "Przypadek · " + cs.tag, body: [`<b>${esc(cs.who)}</b>`, esc(cs.ctx)], note: cs.note };
+  return [card].concat(cs.steps, [{ type:"caseEnd", caseId: cs.id }]);
+}
+function startCase(cs){
+  const endless = !cs;
+  if (endless) cs = CASES[Math.floor(Math.random()*CASES.length)];
+  R = { kind: endless ? "simEndless" : "case", cs, queue: caseQueue(cs), total: endless ? 0 : cs.steps.length, doneCount:0, firstTry:{}, correct:0, xp:0, retried:{}, lastCase: cs.id, casesSeen:0 };
+  next();
+}
+function nextRandomCase(){
+  let pool = CASES.filter(c => c.id !== R.lastCase);
+  const fresh = pool.filter(c => !S.cases[c.id]);
+  if (fresh.length && Math.random() < 0.7) pool = fresh;
+  const cs = pool[Math.floor(Math.random()*pool.length)] || CASES[0];
+  R.lastCase = cs.id; R.firstTry = {}; R.retried = {};
+  R.queue = caseQueue(cs);
+}
+const endlessKind = () => R && (R.kind === "endless" || R.kind === "simEndless");
 
 function next(){
-  if (!R.queue.length) return finish();
+  if (!R.queue.length){
+    if (R.kind === "endless") refillEndless();
+    else if (R.kind === "simEndless") nextRandomCase();
+    else return finish();
+  }
   R.cur = R.queue.shift();
+  if (R.cur.type === "caseEnd"){ S.cases[R.cur.caseId] = (S.cases[R.cur.caseId] || 0) + 1; R.casesSeen++; save(); return next(); }
+  if (R.kind === "endless" && R.cur.id) R.last = R.cur.id;
   R.answered = false;
   renderItem();
 }
 
 function frame(inner, footInner, footCls){
-  const pct = R.total ? Math.round(R.doneCount / R.total * 100) : 0;
+  const pct = R.total ? Math.round(R.doneCount / R.total * 100) : (R.doneCount % 10) * 10;
+  const counter = endlessKind() ? `<span class="counter" id="counter">${counterText()}</span>` : "";
   $app.innerHTML = `<div class="lesson">
-    <div class="wrap l-top"><button class="x" id="quit" aria-label="Zakończ lekcję">${I.x}</button><div class="progress"><i style="width:${pct}%"></i></div></div>
+    <div class="wrap l-top"><button class="x" id="quit" aria-label="${endlessKind()? "Zakończ trening" : "Zakończ lekcję"}">${I.x}</button><div class="progress"><i style="width:${pct}%"></i></div>${counter}</div>
     <div class="wrap l-body" id="body">${inner}</div>
     <div class="foot ${footCls||""}" id="foot"><div class="wrap">${footInner}</div></div>
   </div>`;
-  document.getElementById("quit").onclick = () => { R = null; renderHome(); };
+  document.getElementById("quit").onclick = () => { if (endlessKind() && R.doneCount) return finish(); R = null; renderHome(); };
   window.scrollTo(0,0);
 }
 
 function dialogHtml(d){
   if (!d || !d.length) return "";
-  const who = { K:"Klient", C:"Ty", N:"" };
+  const who = { K:"Klient", C:"Ty", N:"", P:"Partner" };
   return `<div class="dialog">${d.map(([w,t]) => `<div class="line ${w}">${who[w]? `<span class="who">${who[w]}</span>`:""}${esc(t)}</div>`).join("")}</div>`;
 }
 function head(it){
@@ -432,7 +528,12 @@ function srcLine(it){
   return `<p class="src-line">${esc(srcName(it.src))} · ${esc(it.ch || "")}${vid}${flag}</p>`;
 }
 function tonyBox(it){
-  return it.tony ? `<div class="tony"><b>Co zrobił Robbins</b><p>${esc(it.tony)}</p></div>` : "";
+  const say = it.say ? `<div class="tony"><b>Jak to powiedzieć</b><p>${esc(it.say)}</p></div>` : "";
+  return (it.tony ? `<div class="tony"><b>Co zrobił Robbins</b><p>${esc(it.tony)}</p></div>` : "") + say;
+}
+function counterText(){
+  const acc = R.doneCount ? Math.round(R.correct / R.doneCount * 100) : 0;
+  return R.kind === "simEndless" ? `${R.casesSeen} przyp. · ${acc}%` : `${R.doneCount} · ${acc}%`;
 }
 
 function renderItem(){
@@ -444,7 +545,7 @@ function renderItem(){
 }
 
 function renderLearn(it){
-  frame(`<div class="learn"><span class="learn-eyebrow">Teoria</span><h2>${esc(it.title)}</h2>
+  frame(`<div class="learn"><span class="learn-eyebrow">${esc(it.eyebrow || "Teoria")}</span><h2>${esc(it.title)}</h2>
     ${(it.body||[]).map(p => `<p>${p}</p>`).join("")}
     ${it.keys? `<ul>${it.keys.map(k => `<li>${k}</li>`).join("")}</ul>`:""}
     ${it.note? `<p class="note">${esc(it.note)}</p>`:""}</div>`,
@@ -537,7 +638,8 @@ function result(g, html){
   foot.innerHTML = `<div class="wrap"><div class="verdict">${html}</div><button class="primary ${g}" id="cont">Dalej</button></div>`;
   if (g === "bad") document.getElementById("body").classList.add("shake");
   const c = document.getElementById("cont"); c.onclick = next; c.focus({preventScroll:true});
-  const bar = $app.querySelector(".progress i"); if (bar) bar.style.width = Math.round(R.doneCount / R.total * 100) + "%";
+  const bar = $app.querySelector(".progress i"); if (bar) bar.style.width = (R.total ? Math.round(R.doneCount / R.total * 100) : (R.doneCount % 10 || 10) * 10) + "%";
+  const ct = document.getElementById("counter"); if (ct) ct.textContent = counterText();
 }
 
 /* Koniec sesji */
@@ -550,8 +652,9 @@ function finish(){
   if (S.daily.date !== t) S.daily = { date:t, xp:0 };
   S.daily.xp += R.xp;
   save();
-  const acc = R.total ? Math.round(R.correct / R.total * 100) : 100;
-  const title = R.kind === "lesson" ? "Lekcja ukończona" : "Powtórka zrobiona";
+  const base = R.total || R.doneCount;
+  const acc = base ? Math.round(R.correct / base * 100) : 100;
+  const title = { lesson:"Lekcja ukończona", review:"Powtórka zrobiona", endless:`Trening: ${R.doneCount} ${plural(R.doneCount,"ćwiczenie","ćwiczenia","ćwiczeń")}`, case:"Przypadek ukończony", simEndless:`Symulator: ${R.casesSeen} ${plural(R.casesSeen,"przypadek","przypadki","przypadków")}` }[R.kind];
   const msg = acc === 100 ? "Bez jednego błędu." : acc >= 70 ? "Błędne ćwiczenia wrócą jutro w powtórkach." : "Te ćwiczenia wrócą w powtórkach, aż wejdą w krew.";
   const grew = S.streak > before;
   $app.innerHTML = `<div class="lesson"><div class="wrap done-screen">

@@ -17,6 +17,7 @@ window.COURSE = {
     rmt: { short: "Robbins-Madanes Training", full: "Robbins-Madanes Training", status: "waiting" },
     yt: { short: "Interwencja z YouTube", full: "Transkrypcje interwencji z YouTube", status: "ready", label: "16 interwencji" },
     up: { short: "Nieograniczona moc", full: "Unlimited Power (Nieograniczona moc)", status: "ready" },
+    nlp: { short: "NLP i Robbins: wiedza ogólna", full: "Techniki NLP i narzędzia Robbinsa (wiedza ogólna)", status: "ready" },
     giant: { short: "Olbrzymie kroki", full: "Giant Steps (Olbrzymie kroki)", status: "queued" },
     life: { short: "Life Force", full: "Life Force", status: "queued" }
   },
@@ -747,6 +748,367 @@ window.COURSE = {
               ],
               explain: "Przy zewnętrznym odniesieniu wnioski z sesji warto potwierdzać z zewnątrz (dane, opinie). Przy wewnętrznym pytaj: „Jak sam to oceniasz?”.",
               src: "up", ch: "Rozdz. XIV"
+            }
+          ]
+        }
+      ]
+    },
+
+    /* ───────────────────────── NLP: PRECYZJA JĘZYKA ───────────────────────── */
+    {
+      id: "n1", title: "Precyzja języka", sub: "Metamodel: usunięcia, zniekształcenia, uogólnienia", src: "nlp", ch: "Metamodel NLP · Nieograniczona moc, rozdz. XII",
+      lessons: [
+        {
+          id: "n1l1", title: "Co się kryje za słowami",
+          items: [
+            { type: "learn", title: "Metamodel w pigułce",
+              body: [
+                "Ludzie mówią skrótami. Coś <b>usuwają</b> („jest źle”), coś <b>zniekształcają</b> („on mnie lekceważy”, czyli czytanie w myślach) i coś <b>uogólniają</b> („nigdy mi nie wychodzi”). Pytania metamodelu przywracają brakujące informacje i odsłaniają przekonanie.",
+                "<b>Kiedy używać:</b> gdy klient mówi mgliście, gdy nie wiesz, nad czym właściwie pracujecie, gdy w zdaniu siedzi ograniczające przekonanie. <b>Kiedy nie:</b> w silnych emocjach przed zbudowaniem kontaktu. Seria pytań brzmi wtedy jak przesłuchanie."
+              ],
+              keys: [
+                "Usunięcie → „Co konkretnie? Kto konkretnie? W porównaniu z czym?”",
+                "Uogólnienie („zawsze”, „nikt”, „wszyscy”) → „Zawsze? Był choć jeden raz, kiedy było inaczej?”",
+                "Konieczność lub niemożność („muszę”, „nie mogę”) → „Co by się stało, gdybyś tego nie zrobił? Co cię powstrzymuje?”",
+                "Czytanie w myślach → „Skąd wiesz, że on tak myśli?”",
+                "Przyczyna i skutek („on mnie wkurza”) → „Jak dokładnie to, co robi, sprawia, że ty czujesz złość?”",
+                "Nominalizacja („nasza komunikacja się psuje”) → zamień rzeczownik w czasownik: „Jak się teraz ze sobą komunikujecie?”"
+              ]
+            },
+            { id: "n1-1", type: "mc", tech: "Metamodel: czytanie w myślach",
+              dialog: [["K", "Szef mnie nie szanuje. Widzę to po nim."]],
+              q: "Jaki to wzorzec i jakie pytanie zadajesz?",
+              opts: [
+                { t: "Czytanie w myślach: „Po czym konkretnie to widzisz? Co on robi, że dochodzisz do takiego wniosku?”", ok: true },
+                { t: "Uogólnienie: „Czy nikt w pracy cię nie szanuje?”", why: "W zdaniu nie ma słowa „nikt” ani „zawsze”. Klient zakłada, że wie, co szef myśli." },
+                { t: "Nominalizacja: „Czym dla ciebie jest szacunek?”", why: "To ciekawe pytanie na później, ale najpierw sprawdź, na czym opiera się jego „wiem”." }
+              ],
+              explain: "Czytanie w myślach to przekonanie bez dowodów. Pytanie o konkretne zachowanie oddziela fakt (szef nie odpowiedział na maila) od interpretacji (nie szanuje mnie).",
+              src: "nlp", ch: "Metamodel"
+            },
+            { id: "n1-2", type: "mc", tech: "Metamodel: uogólnienie",
+              dialog: [["K", "Nikt mnie nigdy nie słucha."]],
+              q: "Które pytanie najlepiej rozluźnia to uogólnienie, nie łamiąc kontaktu?",
+              opts: [
+                { t: "„Nikt? Nigdy? Przypomnij sobie choć jedną osobę, która cię kiedyś naprawdę wysłuchała.”", ok: true },
+                { t: "„Przecież to niemożliwe, żeby nikt.”", why: "Zaprzeczasz klientowi wprost. Wywołasz obronę zamiast wątpliwości." },
+                { t: "„Dlaczego nikt cię nie słucha?”", why: "Pytanie przyjmuje uogólnienie za fakt i każe szukać dowodów, czyli wzmacnia przekonanie." }
+              ],
+              explain: "Powtórzenie słowa kwantyfikatora z lekkim zdziwieniem („Nikt? Nigdy?”) plus prośba o kontrprzykład to najprostszy sposób na nadkruszenie nogi przekonania.",
+              src: "nlp", ch: "Metamodel"
+            },
+            { id: "n1-3", type: "mc", tech: "Metamodel: operator modalny",
+              dialog: [["K", "Nie mogę powiedzieć mamie, że nie przyjadę na święta."]],
+              q: "Jakie pytanie zadajesz?",
+              opts: [
+                { t: "„Co by się stało, gdybyś jej to powiedziała?”", ok: true },
+                { t: "„Oczywiście, że możesz.”", why: "Przekonywanie nie działa. Klient musi sam zobaczyć, czego się boi." },
+                { t: "„Dlaczego nie możesz?”", why: "Dostaniesz listę powodów, które wzmocnią „nie mogę”." }
+              ],
+              explain: "„Nie mogę” zwykle znaczy „boję się konsekwencji”. Pytanie „co by się stało, gdybyś…?” wyciąga te konsekwencje na światło, a wtedy można z nimi pracować.",
+              src: "nlp", ch: "Metamodel"
+            },
+            { id: "n1-4", type: "mc", tech: "Metamodel: przyczyna i skutek",
+              dialog: [["K", "Żona mnie doprowadza do szału, jak tak wzdycha."]],
+              q: "Który ruch oddaje klientowi wpływ na jego reakcję?",
+              opts: [
+                { t: "„Jak dokładnie to jej westchnienie sprawia, że ty się wściekasz? Co sobie wtedy mówisz w głowie?”", ok: true },
+                { t: "„Może poproś ją, żeby przestała wzdychać.”", why: "Zostawiasz przekonanie, że jego emocje zależą od niej." },
+                { t: "„Ja też bym się wkurzał.”", why: "Zgadzasz się z modelem „ona sprawia, że czuję”. Klient zostaje bez wpływu." }
+              ],
+              explain: "Między bodźcem (westchnienie) a emocją (szał) jest znaczenie, które klient nadaje. To ta sama zasada, której uczy Robbins: nikt nie sprawia, że czujesz, robisz to sam.",
+              src: "nlp", ch: "Metamodel"
+            },
+            { id: "n1-5", type: "mc", tech: "Metamodel: nominalizacja",
+              dialog: [["K", "Brakuje mi w życiu stabilizacji."]],
+              q: "Jak odpakowujesz to słowo?",
+              opts: [
+                { t: "„Gdybyś była ustabilizowana, co konkretnie by się działo? Po czym byś poznała, że już jesteś?”", ok: true },
+                { t: "„Stabilizacja jest bardzo ważna, rozumiem.”", why: "Akceptujesz mgłę. Nadal nie wiesz, nad czym pracujecie." },
+                { t: "„Może potrzebujesz stałej pracy?”", why: "Zgadujesz za klientkę. Dla niej „stabilizacja” może znaczyć coś zupełnie innego." }
+              ],
+              explain: "Nominalizacja to proces zamrożony w rzeczowniku. Zamieniasz go z powrotem w konkretne zachowania i dowody, i wtedy masz cel, z którym można pracować.",
+              src: "nlp", ch: "Metamodel"
+            }
+          ]
+        }
+      ]
+    },
+
+    /* ───────────────────────── NLP: WSPOMNIENIA I STANY ───────────────────────── */
+    {
+      id: "n2", title: "Wspomnienia i stany", sub: "Submodalności, swish, dysocjacja, kotwice", src: "nlp", ch: "Techniki NLP",
+      lessons: [
+        {
+          id: "n2l1", title: "Jak zmienić to, jak coś pamiętasz",
+          items: [
+            { type: "learn", title: "Submodalności",
+              body: [
+                "To samo wspomnienie można przedstawić sobie na różne sposoby: duże albo małe, jasne albo ciemne, blisko albo daleko, w kolorze albo czarno-białe, w ruchu albo jako stop-klatka, z dźwiękiem albo bez. Te cechy to <b>submodalności</b>. Zmiana kilku z nich zmienia intensywność emocji.",
+                "<b>Zasocjowanie</b> (widzisz własnymi oczami) wzmacnia emocję. <b>Zdysocjowanie</b> (widzisz siebie z boku, jak na ekranie) ją osłabia."
+              ],
+              keys: [
+                "Przyjemne wspomnienia i nowe zachowania: zasocjuj, powiększ, rozjaśnij, przybliż.",
+                "Bolesne wspomnienia: zdysocjuj, zmniejsz, oddal, odbarw, dodaj zabawny dźwięk (głos z kreskówki).",
+                "Najpierw sprawdź, które submodalności „robią różnicę” u tego klienta. U jednych działa obraz, u innych dźwięk."
+              ]
+            },
+            { id: "n2-1", type: "mc", tech: "Zasocjowanie a zdysocjowanie",
+              dialog: [["K", "Kiedy przypominam sobie ten wypadek, znowu siedzę w samochodzie i widzę, jak tamto auto na mnie leci."]],
+              q: "Klient przeżywa wspomnienie od środka. Co robisz?",
+              opts: [
+                { t: "Prosisz, żeby wyszedł z obrazu: „Zobacz to z daleka, jak film na małym ekranie w kinie, z siebie siedzącego w ostatnim rzędzie”.", ok: true },
+                { t: "Prosisz, żeby opisał wszystkie szczegóły po kolei.", why: "Zasocjowane, szczegółowe przeżywanie wzmacnia emocję." },
+                { t: "Prosisz, żeby zrobił obraz jaśniejszy i większy.", why: "To wzmacnia, nie osłabia. Tak robi się z przyjemnymi wspomnieniami." }
+              ],
+              explain: "Bolesne wspomnienie zasocjowane = pełna emocja. Dysocjacja daje dystans, w którym można się nim zająć bez ponownego przeżywania. Przy ciężkiej traumie odeślij do specjalisty.",
+              src: "nlp", ch: "Submodalności"
+            },
+            { type: "learn", title: "Swish i szybka technika „kina”",
+              body: [
+                "<b>Swish</b> łączy wyzwalacz starego nawyku z obrazem siebie, jakim chcesz być. Klient widzi wyzwalacz (np. rękę sięgającą po papierosa) jako duży, jasny obraz, a w rogu mały, ciemny obraz pożądanego siebie. Na „swish” obrazy błyskawicznie się zamieniają. Powtarzasz 5–7 razy, czyszcząc ekran między powtórzeniami.",
+                "<b>Kiedy:</b> nawyk lub reakcja z wyraźnym wyzwalaczem (obgryzanie paznokci, sięganie po telefon, nerwowa reakcja na konkretny widok).",
+                "<b>Technika kina</b> (podwójna dysocjacja): klient ogląda siebie na ekranie, siedząc w kabinie projekcyjnej i patrząc na siebie na widowni. Puszcza film zdarzenia w czarno-bieli od chwili „przed” do „po”, a potem szybko przewija od końca do początku w kolorze, z zabawną muzyką. <b>Kiedy:</b> pojedyncza fobia albo jedno intensywne wspomnienie."
+              ],
+              note: "Przy złożonej traumie (przemoc, wiele zdarzeń) techniki te nie zastąpią terapii. Polecaj specjalistę."
+            },
+            { id: "n2-2", type: "mc", tech: "Dobór techniki: swish",
+              dialog: [["K", "Za każdym razem, jak widzę telefon na biurku, biorę go i przewijam. Tracę na tym dwie godziny dziennie."]],
+              q: "Która technika najlepiej pasuje?",
+              opts: [
+                { t: "Swish: wyzwalacz (widok telefonu na biurku) zamieniony na obraz siebie skupionego i spokojnego.", ok: true },
+                { t: "Technika kina.", why: "Kino jest na fobie i jedno intensywne wspomnienie. Tu jest nawyk z wyzwalaczem." },
+                { t: "Praca z linią czasu.", why: "Nie ma tu ciążącej przeszłości. Jest automatyczny wzorzec tu i teraz." }
+              ],
+              explain: "Swish jest stworzony do nawyków z wyraźnym wyzwalaczem. Najważniejsze: obraz docelowy to nie „ja bez telefonu”, tylko ja, jakim chcę być (atrakcyjny, motywujący).",
+              src: "nlp", ch: "Swish"
+            },
+            { id: "n2-3", type: "mc", tech: "Dobór techniki: fobia",
+              dialog: [["K", "Od kiedy pies mnie ugryzł w dzieciństwie, na widok każdego psa robi mi się słabo."]],
+              q: "Co wybierasz?",
+              opts: [
+                { t: "Technikę kina: podwójna dysocjacja, film od „przed” do „po”, potem szybkie przewinięcie od końca w kolorze i z zabawnym dźwiękiem.", ok: true },
+                { t: "Głęboką rozmowę o tym, jak to było, żeby się wygadała.", why: "Ponowne przeżywanie zdarzenia zasocjowane może wzmocnić lęk." },
+                { t: "Afirmację „nie boję się psów”.", why: "Słowa nie zmieniają zapisanej reakcji układu nerwowego." }
+              ],
+              explain: "Pojedyncze zdarzenie, które stworzyło fobię, to klasyczne wskazanie do techniki kina. Na koniec przetestuj: wyobraź sobie psa za płotem, co czujesz teraz?",
+              src: "nlp", ch: "Technika kina"
+            },
+            { id: "n2-4", type: "mc", tech: "Zapadanie kotwic",
+              q: "Klientka za każdym razem, gdy słyszy dzwonek telefonu od szefa, czuje ścisk w żołądku. Chcesz zneutralizować tę reakcję kotwicami. Co robisz?",
+              opts: [
+                { t: "Zakotwiczasz mocny stan zasobu na jednym kolanie, stan „ścisku” na drugim, a potem odpalasz obie kotwice naraz, aż stan zasobu przeważy. To zapadanie kotwic.", ok: true },
+                { t: "Zakotwiczasz tylko stan ścisku, żeby lepiej go poznać.", why: "Wzmocnisz go, zamiast zneutralizować." },
+                { t: "Każesz jej wyłączyć dźwięk telefonu.", why: "Unikanie wyzwalacza nie zmienia reakcji, tylko ją odkłada." }
+              ],
+              explain: "Zapadanie kotwic: zasób musi być mocniejszy niż problem. Często łączy się kilka zasobów na jednej kotwicy (kotwice nakładane), zanim odpali się obie naraz.",
+              src: "nlp", ch: "Kotwice"
+            }
+          ]
+        }
+      ]
+    },
+
+    /* ───────────────────────── NLP: PERSPEKTYWY, CZĘŚCI, POZIOMY ───────────────────────── */
+    {
+      id: "n3", title: "Perspektywy, części, poziomy", sub: "Pozycje percepcyjne, praca z częściami, poziomy logiczne, linia czasu", src: "nlp", ch: "Techniki NLP",
+      lessons: [
+        {
+          id: "n3l1", title: "Kiedy co wybrać",
+          items: [
+            { type: "learn", title: "Mapa narzędzi",
+              keys: [
+                "<b>Pozycje percepcyjne</b> (ja · druga osoba · obserwator z boku). Kiedy: konflikt z konkretną osobą, brak zrozumienia drugiej strony.",
+                "<b>Praca z częściami</b> (integracja w dłoniach). Kiedy: „część mnie chce, a część nie”, wewnętrzne rozdarcie, sabotaż.",
+                "<b>Poziomy logiczne</b> (otoczenie · zachowanie · umiejętności · przekonania i wartości · tożsamość · misja). Kiedy: diagnozujesz, na jakim poziomie leży problem. Zmiana na wyższym poziomie przenosi się na niższe.",
+                "<b>Linia czasu</b>. Kiedy: przeszłość ciąży („to mnie wciąż prześladuje”) albo przyszłość jest mglista. Klient patrzy na zdarzenie z góry, sprzed niego, i zabiera z niego naukę.",
+                "<b>Zmiana poziomu ogólności</b>. Klient utknął w szczegółach: pytaj „po co? co ci to da?” (w górę). Klient jest we mgle: pytaj „co konkretnie? jak konkretnie?” (w dół)."
+              ]
+            },
+            { id: "n3-1", type: "mc", tech: "Dobór techniki: pozycje percepcyjne",
+              dialog: [["K", "Mój wspólnik jest nieznośny. Zupełnie nie rozumiem, czemu tak się upiera przy tej inwestycji."]],
+              q: "Co wybierasz?",
+              opts: [
+                { t: "Pozycje percepcyjne: klient opisuje sytuację ze swojej perspektywy, potem siada na miejscu wspólnika i mówi jak on, a potem patrzy na obu z boku jako obserwator.", ok: true },
+                { t: "Pracę z częściami.", why: "Konflikt jest między dwiema osobami, nie wewnątrz klienta." },
+                { t: "Technikę kina.", why: "To technika na fobie i bolesne wspomnienia, a nie na nieporozumienie z kimś." }
+              ],
+              explain: "„Nie rozumiem, czemu on…” to sygnał do zmiany perspektywy. Druga pozycja daje zrozumienie, a trzecia spokój i widok całego układu.",
+              src: "nlp", ch: "Pozycje percepcyjne"
+            },
+            { id: "n3-2", type: "mc", tech: "Dobór techniki: części",
+              dialog: [["K", "Jedna część mnie chce rzucić etat i jechać w świat, a druga mówi, że to szaleństwo i że mam kredyt."]],
+              q: "Co wybierasz?",
+              opts: [
+                { t: "Pracę z częściami: rozmawiasz z każdą osobno, pytasz o pozytywną intencję, szukasz wspólnej wartości, a potem integrujesz je w dłoniach.", ok: true },
+                { t: "Listę plusów i minusów.", why: "To rozmowa z głowy. Każda część wygra swój argument i konflikt zostanie." },
+                { t: "Pozycje percepcyjne.", why: "Tu konflikt jest wewnętrzny, a nie z inną osobą." }
+              ],
+              explain: "„Część mnie… a część mnie…” to klasyczny sygnał. Tak pracował Robbins z Joshem (hipis i przedsiębiorca): żadnej części nie zwalczał, tylko szukał mostu.",
+              src: "nlp", ch: "Praca z częściami"
+            },
+            { id: "n3-3", type: "mc", tech: "Poziomy logiczne",
+              dialog: [["K", "Ja po prostu nie jestem typem osoby, która umie sprzedawać."]],
+              q: "Na jakim poziomie jest ten problem?",
+              opts: [
+                { t: "Tożsamości („nie jestem typem osoby”). Sam trening technik sprzedaży nie wystarczy, dopóki klient tak siebie widzi.", ok: true },
+                { t: "Umiejętności, bo chodzi o sprzedaż.", why: "Mówi o tym, kim jest, a nie o tym, czego nie umie." },
+                { t: "Otoczenia, bo pewnie ma trudny rynek.", why: "Nic o rynku nie mówi. Słowo „typem osoby” wskazuje na tożsamość." }
+              ],
+              explain: "Problemy tożsamości rozwiązuje się na poziomie tożsamości i przekonań (np. „uczę się sprzedawać jak każdej umiejętności”, nowe referencje). Dopiero potem umiejętności zaczną się przyjmować.",
+              src: "nlp", ch: "Poziomy logiczne"
+            },
+            { id: "n3-4", type: "mc", tech: "Zmiana poziomu ogólności",
+              dialog: [["K", "Muszę wybrać między tymi dwoma ofertami pracy. Jedna ma lepszy pakiet medyczny, druga bliżej dojazd, w jednej jest 26 dni urlopu, w drugiej 28…"]],
+              q: "Klient tonie w szczegółach. Co pytasz?",
+              opts: [
+                { t: "„Co jest dla ciebie najważniejsze w pracy w ogóle? Po co ci ta zmiana?” (pytanie w górę, o wartości).", ok: true },
+                { t: "„A jakie są jeszcze różnice?”", why: "Wciągasz go głębiej w szczegóły." },
+                { t: "„Wybierz tę z wyższą pensją.”", why: "Decydujesz za klienta." }
+              ],
+              explain: "Gdy klient utknął w detalach, idź w górę, do wartości i celów. Gdy jest we mgle („chcę czegoś więcej”), idź w dół, do konkretów.",
+              src: "nlp", ch: "Poziomy ogólności"
+            },
+            { id: "n3-5", type: "mc", tech: "Dobór techniki: linia czasu",
+              dialog: [["K", "Ta zdrada sprzed pięciu lat ciągle za mną chodzi. Niby to przeszłość, a codziennie o tym myślę."]],
+              q: "Co może pomóc?",
+              opts: [
+                { t: "Praca z linią czasu: klient unosi się nad linią swojego życia, wraca nad zdarzenie, patrzy na nie z góry i sprzed niego, i zabiera z niego naukę, którą zostawia sobie na przyszłość.", ok: true },
+                { t: "Swish.", why: "Swish jest na nawyki z wyzwalaczem, a nie na ciężar przeszłości." },
+                { t: "Analiza, dlaczego partner zdradził.", why: "Analiza przyczyn utrzymuje klienta w tym samym miejscu na linii czasu." }
+              ],
+              explain: "Gdy przeszłość „chodzi za klientem”, zmieniasz jego relację z czasem: zdarzenie zostaje tam, gdzie było, a z klientem zostaje tylko nauka.",
+              src: "nlp", ch: "Linia czasu"
+            }
+          ]
+        }
+      ]
+    },
+
+    /* ───────────────────────── ROBBINS: NARZĘDZIA ───────────────────────── */
+    {
+      id: "n4", title: "Narzędzia Robbinsa", sub: "Triada, wzorzec Dickensa, inkantacje, priming", src: "nlp", ch: "Wiedza ogólna o metodzie Robbinsa",
+      lessons: [
+        {
+          id: "n4l1", title: "Triada i dźwignia",
+          items: [
+            { type: "learn", title: "Triada",
+              body: ["Każdy stan emocjonalny powstaje z trzech elementów: <b>fizjologii</b> (ciało, oddech, ruch), <b>skupienia</b> (na czym się koncentrujesz) i <b>języka i znaczenia</b> (jakimi słowami to nazywasz, co to dla ciebie znaczy). Zmień jeden element, a zmienisz stan. Zmień wszystkie trzy, a zmienisz go natychmiast."],
+              keys: ["Kiedy: klient jest w ograniczającym stanie na sesji, zanim cokolwiek zaplanujecie.", "Najszybsza jest fizjologia. Najtrwalsze jest znaczenie."]
+            },
+            { id: "n4-1", type: "mc", tech: "Triada",
+              dialog: [["K", "(zgarbiona, cicho) Wszystko się wali, nie mam siły na nic."]],
+              q: "Co zmieniasz najpierw i dlaczego?",
+              opts: [
+                { t: "Fizjologię: wstań, oddychaj pełniej, podnieś głowę. To najszybszy z trzech elementów, a w lepszym stanie łatwiej zmienić skupienie i znaczenie.", ok: true },
+                { t: "Znaczenie: tłumaczysz, że to okazja do rozwoju.", why: "Reframing trafi do kogoś w lepszym stanie. Zgarbiony i bez energii klient go odrzuci." },
+                { t: "Nic. Najpierw musi się wygadać.", why: "Krótkie uznanie tak, ale wygadanie się w tym samym stanie go pogłębia." }
+              ],
+              explain: "Kolejność: fizjologia (sekundy), potem skupienie (pytanie, obraz), potem znaczenie (reframing). Wtedy reframing trafia na podatny grunt.",
+              src: "nlp", ch: "Triada"
+            },
+            { type: "learn", title: "Wzorzec Dickensa",
+              body: [
+                "Technika budowania dźwigni na przekonaniu (nazwana od „Opowieści wigilijnej”). Klient bierze ograniczające przekonanie i przechodzi przez trzy czasy: co już go kosztowało w przeszłości, co kosztuje go teraz, co będzie go kosztować za 5, 10, 20 lat (siebie i bliskich). Mocno zasocjowany, z pełnym bólem.",
+                "Potem robi to samo z nowym, wzmacniającym przekonaniem, tylko z przyjemnością: co da mu dziś, za 5, 10 lat.",
+                "<b>Kiedy:</b> klient wie, że przekonanie mu szkodzi, ale nie ma motywacji, żeby je puścić."
+              ]
+            },
+            { id: "n4-2", type: "order", tech: "Wzorzec Dickensa",
+              q: "Ułóż kroki wzorca Dickensa.",
+              items: ["Nazwij ograniczające przekonanie", "Poczuj, co już kosztowało w przeszłości", "Poczuj, co kosztuje teraz", "Zobacz i poczuj koszt za 5, 10, 20 lat, także dla bliskich", "Przerwij stan", "Nazwij nowe przekonanie i przejdź przez przyszłość z nim, z pełną przyjemnością"],
+              explain: "Ból musi być zasocjowany i obejmować bliskich. Przerwanie stanu przed częścią z przyjemnością jest ważne, żeby nie zmieszać obu stanów.",
+              src: "nlp", ch: "Wzorzec Dickensa"
+            },
+            { id: "n4-3", type: "mc", tech: "Inkantacje a afirmacje",
+              q: "Czym według Robbinsa inkantacja różni się od afirmacji?",
+              opts: [
+                { t: "Inkantację mówisz na głos całym ciałem: z intensywną fizjologią, głosem i emocją, aż poczujesz pewność. Afirmacja to często tylko powtarzanie słów w głowie.", ok: true },
+                { t: "Inkantacja jest dłuższa.", why: "Długość nie gra roli. Liczy się zaangażowanie ciała i emocji." },
+                { t: "Niczym, to to samo.", why: "Robbins mocno je odróżnia. Afirmacja bez emocji to tylko słowa." }
+              ],
+              explain: "Zasada kongruencji (jak u Tiny Marie): słowa bez ciała i tonu są puste. Inkantacja łączy język z fizjologią i skupieniem, czyli z całą triadą.",
+              src: "nlp", ch: "Inkantacje"
+            },
+            { id: "n4-4", type: "mc", tech: "Priming",
+              q: "Klient pyta o codzienną praktykę, która utrzyma efekt sesji. Co proponujesz w duchu Robbinsa?",
+              opts: [
+                { t: "Krótki poranny priming (ok. 10 minut): rytmiczny oddech, kilka minut wdzięczności za konkretne chwile, potem wyobrażenie sobie celów jako już osiągniętych.", ok: true },
+                { t: "Godzinę analizy dziennika z całego tygodnia.", why: "Może mieć sens, ale nie przestawia stanu na start dnia i rzadko jest robione regularnie." },
+                { t: "Nic. Efekt sesji powinien wystarczyć.", why: "Bez warunkowania nowy stan zanika. To krok 5 NAC." }
+              ],
+              explain: "Priming to codzienne warunkowanie stanu. Krótki i regularny bije długi i okazjonalny.",
+              src: "nlp", ch: "Priming"
+            }
+          ]
+        }
+      ]
+    },
+
+    /* ───────────────────────── DOBÓR TECHNIKI ───────────────────────── */
+    {
+      id: "n5", title: "Kiedy której techniki użyć", sub: "Sygnał klienta → narzędzie", src: "nlp", ch: "Synteza",
+      lessons: [
+        {
+          id: "n5l1", title: "Ściągawka i szybkie decyzje",
+          items: [
+            { type: "learn", title: "Sygnał → narzędzie",
+              keys: [
+                "Mówi tylko, czego nie chce → <b>krok 1 NAC</b>: „Czego chcesz zamiast tego?”",
+                "„Powinienem”, „kiedyś” → <b>dźwignia</b> (koszty, wzorzec Dickensa).",
+                "Powtarza tę samą historię, nakręca się → <b>przerwanie wzorca</b>.",
+                "Zgarbiony, cichy, bez energii → <b>fizjologia</b> (triada).",
+                "Mgliste słowa, „wszyscy”, „nigdy” → <b>metamodel</b>.",
+                "„Nie jestem typem…” → <b>tożsamość</b> (poziomy logiczne, nowe referencje).",
+                "Bolesne wspomnienie wraca → <b>submodalności, dysocjacja, technika kina</b>.",
+                "Nawyk z wyzwalaczem → <b>swish</b>.",
+                "„Część mnie chce, część nie” → <b>praca z częściami</b>.",
+                "Nie rozumie drugiej osoby → <b>pozycje percepcyjne</b>.",
+                "Zachowanie destrukcyjne, a jednak trwa → <b>sześć potrzeb</b>: co mu to daje?",
+                "Złości się na kogoś → <b>reguły</b>: jaka zasada została złamana?",
+                "Zmiana na sesji gotowa → <b>test i przeniesienie w przyszłość</b>."
+              ]
+            },
+            { id: "n5-1", type: "mc", tech: "Dobór techniki",
+              dialog: [["K", "Wiem, że powinienem ograniczyć alkohol. Kiedyś się za to zabiorę."]],
+              q: "Od czego zaczynasz?",
+              opts: [{ t: "Dźwignia", ok: true }, { t: "Swish", why: "Swish przyda się później, na wyzwalacz. Najpierw zmiana musi stać się „muszę”." }, { t: "Pozycje percepcyjne", why: "Nie ma tu konfliktu z drugą osobą." }],
+              explain: "„Powinienem” i „kiedyś” to sygnał, że zmiana nie jest koniecznością. Bez dźwigni każda technika będzie tylko ciekawostką.",
+              src: "nlp", ch: "Dobór techniki"
+            },
+            { id: "n5-2", type: "mc", tech: "Dobór techniki",
+              dialog: [["K", "Ilekroć mijam tamto skrzyżowanie, widzę ten wypadek jak na nowo."]],
+              q: "Co wybierasz?",
+              opts: [{ t: "Dysocjacja i technika kina", ok: true }, { t: "Metamodel", why: "Język nie jest tu problemem. Problemem jest zapis wspomnienia." }, { t: "Bilans sześciu potrzeb", why: "To nie zachowanie, które coś daje, tylko reakcja lękowa na wspomnienie." }],
+              explain: "Intensywne wspomnienie, które wraca przy bodźcu, to wskazanie do pracy z submodalnościami i dysocjacją. Przy ciężkiej traumie odeślij do specjalisty.",
+              src: "nlp", ch: "Dobór techniki"
+            },
+            { id: "n5-3", type: "mc", tech: "Dobór techniki",
+              dialog: [["K", "Nie wiem, dlaczego to robię. Wiem, że objadanie się w nocy mnie niszczy, a robię to od lat."]],
+              q: "Jakie pytanie diagnostyczne zadajesz najpierw?",
+              opts: [{ t: "„Co ci to daje? Jakie potrzeby zaspokaja?”", ok: true }, { t: "„Kiedy to się zaczęło?”", why: "Historia może się przydać, ale nie powie ci, co podtrzymuje wzorzec dziś." }, { t: "„Czy próbowałeś diety?”", why: "Strategia bez zrozumienia, co daje stary wzorzec." }],
+              explain: "Zachowanie destrukcyjne, które trwa latami, zaspokaja potrzeby (najczęściej pewność i ulgę). Bez tej wiedzy nie zbudujesz alternatywy (krok 4 NAC).",
+              src: "nlp", ch: "Dobór techniki", verify: true
+            },
+            { id: "n5-4", type: "mc", tech: "Dobór techniki",
+              dialog: [["K", "Jestem wściekła na siostrę. Znowu nie zadzwoniła w moje urodziny."]],
+              q: "Co pytasz?",
+              opts: [{ t: "„Jaka twoja zasada została złamana? Co musi się wydarzyć, żebyś czuła, że jesteś dla niej ważna?”", ok: true }, { t: "„Dlaczego ona tak robi?”", why: "Czytanie w myślach siostry. Klientka nie ma na to wpływu." }, { t: "„Może ma dużo na głowie.”", why: "Usprawiedliwiasz siostrę, zamiast pracować z regułą klientki." }],
+              explain: "Złość to sygnał złamanej reguły. Nazwanie reguły pozwala ją zakomunikować albo zmienić na łatwiejszą do spełnienia.",
+              src: "nlp", ch: "Dobór techniki"
+            },
+            { id: "n5-5", type: "mc", tech: "Dobór techniki",
+              dialog: [["K", "Jestem po prostu leniwa. Taka się urodziłam."]],
+              q: "Na co zwracasz uwagę?",
+              opts: [{ t: "Na tożsamość: „jestem leniwa” to etykieta, nie zachowanie. Pytasz o kontrprzykłady i budujesz nową referencję.", ok: true }, { t: "Na plan dnia: trzeba lepiej zorganizować czas.", why: "Plan nie zadziała, dopóki klientka widzi siebie jako „leniwą z natury”." }, { t: "Na zmęczenie: może za mało śpi.", why: "Warto sprawdzić później, ale klientka mówi o tym, kim jest." }],
+              explain: "„Jestem…” to poziom tożsamości. Szukaj sytuacji, w których była zaangażowana i pracowita, bo to nogi nowego przekonania.",
+              src: "nlp", ch: "Dobór techniki"
+            },
+            { id: "n5-6", type: "mc", tech: "Dobór techniki",
+              q: "Pod koniec sesji klient mówi: „Czuję, że coś się zmieniło”. Co robisz?",
+              opts: [{ t: "Testujesz: wyobraź sobie sytuację, która wcześniej uruchamiała stary wzorzec. Co czujesz teraz?", ok: true }, { t: "Kończysz, skoro czuje zmianę.", why: "Bez testu nie wiesz, czy zmiana zadziała w realnej sytuacji." }, { t: "Dajesz mu kolejną technikę na wszelki wypadek.", why: "Najpierw sprawdź, czy ta zadziałała." }],
+              explain: "Krok 6 NAC: test. Wywołaj bodziec w wyobraźni i sprawdź reakcję. Dopiero gdy jest nowa, kończysz.",
+              src: "nlp", ch: "Dobór techniki"
             }
           ]
         }

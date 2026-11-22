@@ -9,7 +9,14 @@ Otwórz `app/index.html` w przeglądarce. Nie wymaga instalacji ani serwera.
 ## Struktura
 
 - `app/index.html`: aplikacja (widoki, logika lekcji, powtórki, postęp w `localStorage`)
-- `app/content.js`: cała treść kursu (działy, lekcje, ćwiczenia)
+- `app/content.js`: treść kursu (działy, lekcje, interwencje Robbinsa)
+- `app/cases.js`, `app/cases2.js`: zmyślone przypadki do symulatora interwencji
+
+## Tryby
+
+- **Ścieżka**: lekcje po kolei, jak w Duolingo.
+- **Trening**: powtórki rozłożone w czasie oraz trening losowy bez końca (z przerobionych lekcji albo ze wszystkich).
+- **Symulator**: zmyślone przypadki z dialogami. Co robisz, co mówisz, jaki wzorzec rozpoznajesz. Można wybrać przypadek albo losować bez końca.
 
 ## Treść
 
