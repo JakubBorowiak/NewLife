@@ -15,7 +15,7 @@ window.COURSE = {
   sources: {
     awaken: { short: "Obudź w sobie olbrzyma", full: "Awaken the Giant Within (Obudź w sobie olbrzyma)", status: "ready" },
     rmt: { short: "Robbins-Madanes Training", full: "Robbins-Madanes Training", status: "waiting" },
-    yt: { short: "Interwencja z YouTube", full: "Transkrypcje interwencji z YouTube", status: "ready", label: "5 interwencji" },
+    yt: { short: "Interwencja z YouTube", full: "Transkrypcje interwencji z YouTube", status: "ready", label: "16 interwencji" },
     up: { short: "Nieograniczona moc", full: "Unlimited Power (Nieograniczona moc)", status: "ready" },
     giant: { short: "Olbrzymie kroki", full: "Giant Steps (Olbrzymie kroki)", status: "queued" },
     life: { short: "Life Force", full: "Life Force", status: "queued" }
@@ -1481,6 +1481,376 @@ window.COURSE = {
               tony: "Zapytał: wzięłabyś 6,5x od kogoś mądrego, kto pomoże ci urosnąć? Odpowiedziała, że od partnera strategicznego wzięłaby nawet 2x. „No to to rób”. Na koniec: gdy na szczycie są znaczenie i pewność, działamy samolubnie, nawet będąc dobrym człowiekiem, i to blokuje miłość i rozwój.",
               explain: "Wpływ zaczyna się od zrozumienia potrzeb drugiej strony. To dotyczy negocjacji, sprzedaży i związków.",
               src: "yt", ch: "Pixie, cz. 8"
+            }
+          ]
+        }
+      ]
+    },
+
+    /* ───────── Terry i O'Neal ───────── */
+    {
+      id: "yt-terry", title: "Terry i O'Neal: miłość bez bliskości", sub: "Para · szalona ósemka · obecność", len: "film do ustalenia",
+      lessons: [
+        {
+          id: "te-l1", title: "Zacznij od siebie",
+          items: [
+            { id: "te-1", type: "mc", tech: "Otwarcie pracy z parą",
+              dialog: [["C", "Co się naprawdę dzieje?"], ["K", "Utknęliśmy. …Boję się."]],
+              q: "Terry zaczęła od „boję się”, a nie od tego, co robi partner. Co z tym robisz?",
+              opts: [
+                { t: "Wyraźnie to nagradzasz: „Właśnie tak się zaczyna. Od siebie, nie od partnera”.", ok: true },
+                { t: "Pytasz od razu: „Czego się boisz w jego zachowaniu?”", why: "Kierujesz ją z powrotem na partnera i otwierasz drogę do obwiniania." },
+                { t: "Pytasz partnera, czy wiedział, że ona się boi.", why: "Za wcześnie. Najpierw utrwal sposób rozmowy, który zadziała." }
+              ],
+              tony: "Poprosił salę o brawa i wyjaśnił: nigdy nie zadziała „czuję się tak przez ciebie”, bo nikt nie sprawia, że czujemy się w określony sposób. Uczciwie brzmi: „Kiedy mówisz takie rzeczy, ja sprawiam, że czuję się…”. Sage dodała: strach często wygląda na zewnątrz jak złość.",
+              explain: "W pracy z parą ustaw zasadę od pierwszej minuty: każde z was mówi o sobie. Obwinianie gwarantuje porażkę.",
+              src: "yt", ch: "Terry i O'Neal, cz. 1"
+            },
+            { id: "te-2", type: "mc", tech: "Szalona ósemka",
+              dialog: [["K", "Kiedy boję się braku więzi, mam lęk, zamykam się i wpadam w depresję. On widzi wycofanie i zołzowatość."]],
+              q: "Jak Robbins tłumaczy jej wzorzec?",
+              opts: [
+                { t: "Jako „szaloną ósemkę”: z lęku przeskakuje w złość, bo złość daje pewność, znaczenie i jakąś więź. Gdy złości jest za dużo, wraca do lęku. Po wielu takich pętlach przychodzi depresja.", ok: true },
+                { t: "Jako zaburzenie lękowe, które trzeba leczyć.", why: "Robbins opisuje mechanizm potrzeb, a nie stawia diagnozy." },
+                { t: "Jako reakcję na złe zachowanie partnera.", why: "Sama mówi, że żyła tak, zanim go poznała." }
+              ],
+              tony: "Najpierw z humorem poprosił ją, żeby pokazała swoją „zołzowatość” (skrzyżowane ręce, wytrzeszczone oczy). Sala się śmiała i napięcie zeszło. Gdy wyjaśnił ósemkę, Terry powiedziała: „W tysiącu procent. I żyłam tak, zanim się poznaliśmy”.",
+              explain: "Pokazanie zachowania w przesadzony sposób przerywa wzorzec i pozwala klientowi zobaczyć go z zewnątrz.",
+              src: "yt", ch: "Terry i O'Neal, cz. 2", verify: true
+            },
+            { id: "te-3", type: "mc", tech: "Słowo „próbuję”",
+              dialog: [["C", "Jaka jest twoja strategia wyjścia z tego?"], ["K", "Próbuję sprawić, żeby to działało."]],
+              q: "Co robi Robbins z „próbuję”?",
+              opts: [
+                { t: "Każe jej „spróbować podnieść krzesło”. Kiedy podnosi, mówi: „Nie kazałem podnieść, kazałem spróbować”. Albo robisz, albo nie. „Próbuję” uspokaja ego, ale nie oznacza zaangażowania.", ok: true },
+                { t: "Chwali ją za starania.", why: "Wzmacniasz słowo, które pozwala nie działać w pełni." },
+                { t: "Pyta, co konkretnie próbowała.", why: "Lepsze niż pochwała, ale nie odsłania pułapki w samym słowie." }
+              ],
+              tony: "Po demonstracji zapytał jeszcze raz. Prawdziwa odpowiedź: „Idę do pracy”. W pracy ma więcej pewności, różnorodności i znaczenia, i ma iluzję, że ma tam więcej kontroli, bo nie ma tam bliskości.",
+              explain: "Fizyczna demonstracja zostaje w pamięci na dłużej niż wyjaśnienie. „Próbuję” to jedno z najważniejszych słów do wyłapania.",
+              src: "yt", ch: "Terry i O'Neal, cz. 3"
+            }
+          ]
+        },
+        {
+          id: "te-l2", title: "Bilans potrzeb i obecność",
+          items: [
+            { id: "te-4", type: "mc", tech: "Bilans potrzeb partnera",
+              q: "Robbins prosi Terry, żeby oceniła od −10 do +10, jak bardzo zaspokaja potrzeby O'Neala. Pewność, że może ją uszczęśliwić: −10. Jak Robbins to komentuje dla kobiet na sali?",
+              opts: [
+                { t: "Dla mężczyzny poczucie, że nie potrafi uszczęśliwić kobiety, to jak rak. Mężczyźni chcą sprawiać radość, a gdy kobieta się rozświetla, rozświetla się i on.", ok: true },
+                { t: "Że to nie ma znaczenia, liczy się miłość.", why: "Właśnie dlatego, że miłość jest, a pewności brak, para cierpi." },
+                { t: "Że O'Neal powinien się bardziej starać.", why: "Bilans pokazuje, jak Terry zaspokaja jego potrzeby, nie odwrotnie." }
+              ],
+              tony: "Gdy Terry próbowała uciec od liczb („powiedzmy, że wszystkie są niskie”), nie odpuścił. Gdy zareagowała obronnie na westchnienie sali, nazwał defensywność jednym z czterech jeźdźców. Terry: „Mam to na liście do pracy”. Robbins: „A kiedy byłby dobry moment?”. Terry: „Zróbmy to”.",
+              explain: "Liczby zmuszają do konkretu. Ocena z perspektywy partnera uczy klienta patrzeć oczami drugiej strony.",
+              src: "yt", ch: "Terry i O'Neal, cz. 4"
+            },
+            { id: "te-5", type: "mc", tech: "Obecność bez słów",
+              dialog: [["C", "Co musi się wydarzyć, żebyś czuła więź z tym mężczyzną?"], ["K", "Czuć się energetycznie połączona. Nie wiem, jak to uchwycić."]],
+              q: "Co robi Robbins?",
+              opts: [
+                { t: "Robi eksperyment: rozstawia ich w przejściu, szepcze O'Nealowi do ucha i każe mu tylko patrzeć jej w oczy. Po kilku sekundach Terry sama do niego podchodzi.", ok: true },
+                { t: "Pomaga jej zdefiniować więź słowami.", why: "Ona nie wie, jak to nazwać. Doświadczenie da jej odpowiedź szybciej niż definicja." },
+                { t: "Daje im zadanie domowe na randkę.", why: "Może później, ale teraz można jej pokazać odpowiedź na żywo." }
+              ],
+              tony: "Zdradził, co szepnął: „Patrz w jej oczy, nie myśl o sobie ani przez chwilę i powtarzaj w głowie: kocham cię, czczę cię, zawsze się tobą zaopiekuję”. Terry powiedziała, że przyciągnęło ją to, że był nieruchomy i skupiony na niej, i że zobaczyła w jego oczach ból. Potem odwrócił ćwiczenie: ona wysłała mu radość i miłość bez słów, a O'Neal poczuł, że ona go potrzebuje.",
+              explain: "Gdy reguła klienta jest mglista („energetyczne połączenie”), stwórz doświadczenie na sesji. Obecność to brak myślenia o sobie.",
+              src: "yt", ch: "Terry i O'Neal, cz. 6"
+            },
+            { id: "te-6", type: "mc", tech: "Język: „moje”",
+              dialog: [["K", "Czuję to, co mówi. Ale mam w sobie dużo winy. I to jest moja wina, moje poczucie winy."]],
+              q: "Co robi Robbins z „moje poczucie winy”?",
+              opts: [
+                { t: "Przerywa ostro i z humorem: „Myślisz, że to twoje poczucie winy? Że ty je wymyśliłaś? Miliony ludzi je czują”. Słowo „moje” przykleja emocję do tożsamości.", ok: true },
+                { t: "Pyta, skąd się wzięło to poczucie winy.", why: "Grzebanie w źródle wzmacnia emocję, zamiast ją odkleić." },
+                { t: "Mówi, że poczucie winy jest zdrowe, jeśli coś zrobiła.", why: "Według Robbinsa emocja jest sygnałem, ale nie powinna stać się jej tożsamością." }
+              ],
+              tony: "Wcześniej O'Neal sam wziął na siebie decyzję o braku dzieci: „Wybrałem ciebie”. Na koniec Robbins zapytał oboje, czy chcą zostać w małżeństwie, i zdjął ze stołu opcję odejścia: „Dalej zastanawiamy się nad odejściem, czy zobowiązujemy się, że to zadziała?”. Oboje się zobowiązali.",
+              explain: "Słowa, którymi opisujemy doświadczenie, stają się doświadczeniem. Dopóki jedno z partnerów rozważa odejście, żadna praca nie zadziała, więc zdejmij tę opcję ze stołu.",
+              src: "yt", ch: "Terry i O'Neal, cz. 9"
+            }
+          ]
+        }
+      ]
+    },
+
+    /* ───────── Jackie i Fabio ───────── */
+    {
+      id: "yt-fabio", title: "Jackie i Fabio: mężczyzna w tunelu", sub: "Para · lusterko wsteczne · praca z dłońmi", len: "film do ustalenia",
+      lessons: [
+        {
+          id: "fa-l1", title: "Tunel i lusterko wsteczne",
+          items: [
+            { id: "fa-1", type: "mc", tech: "Kalibracja gestu",
+              dialog: [["K", "Chciałam mieć pewność, że nie tracę czasu. I on się zgodził…"], ["N", "Jackie mówi z ręką na biodrze i wskazuje palcem."]],
+              q: "Co robi Robbins?",
+              opts: [
+                { t: "Przerywa i pokazuje jej gest: „Ręka na biodrze. Czy to głowa, czy serce? I w którą stronę wskazujesz: obwiniasz czy bierzesz odpowiedzialność?”", ok: true },
+                { t: "Słucha do końca, bo każda strona ma swoją wersję.", why: "Jej ciało mówi więcej niż słowa. Bez zatrzymania dalsza rozmowa będzie oskarżeniem." },
+                { t: "Pyta partnera, co o tym myśli.", why: "Partnera jeszcze nawet nie ma na miejscu (poszedł do łazienki)." }
+              ],
+              tony: "Od razu dodał: „Nie robię z ciebie winnej. Chcę, żebyś zobaczyła prawdę, bo prawda cię uwolni. Masz prawo do wszystkiego, co czujesz. Tylko że to wszystko jest o tobie”.",
+              explain: "Gest często zdradza stan szybciej niż słowa. Nazwij go łagodnie i od razu zdejmij poczucie winy.",
+              src: "yt", ch: "Jackie i Fabio, cz. 1"
+            },
+            { id: "fa-2", type: "mc", tech: "Lusterko wsteczne",
+              dialog: [["K", "(Fabio) W pierwszym małżeństwie żona chciała dziecka, a ja zarabiałem 9 dolarów na godzinę. Widziałem, jak mój ojciec imigrant z każdym dzieckiem miał więcej prac i coraz mniej go widziałem. Zawsze wolę iść powoli."]],
+              q: "Jaką diagnozę stawia Robbins?",
+              opts: [
+                { t: "„Wszystko, co mi powiedziałeś, nie ma nic wspólnego z nią”. Fabio filtruje Jackie przez swoją przeszłość, a Jackie robi to samo. Jadą w przyszłość, patrząc w lusterko wsteczne.", ok: true },
+                { t: "Że Fabio ma rację i trzeba iść powoli.", why: "Tempo może mieć znaczenie, ale problem leży w filtrze z przeszłości." },
+                { t: "Że Fabio nie kocha Jackie.", why: "Wszystko wskazuje na coś przeciwnego." }
+              ],
+              tony: "Potem nazwał stan Fabio „tunelem”: mężczyzna, który nie jest tam, gdzie uważa, że powinien być, czuje się w środku jak martwy. Do tego bije się z myślami, że zawodzi też partnerkę, więc ma mniej energii i jest mniej obecny, a ona widzi tylko brak zaangażowania.",
+              explain: "Reframing dla partnerki: to nie brak miłości, tylko mężczyzna w tunelu. Zmienia to, jak ona interpretuje jego wycofanie.",
+              src: "yt", ch: "Jackie i Fabio, cz. 2–3"
+            },
+            { id: "fa-3", type: "mc", tech: "Strach to egoizm (bez oceny)",
+              dialog: [["K", "(Fabio) Ona daje mi więcej, niż ja jej. Byłem tchórzem. Dlaczego? Bo jestem samolubny."]],
+              q: "Jak Robbins odpowiada na tę samokrytykę?",
+              opts: [
+                { t: "„Strach to egoizm, przyjacielu. Więc się nie osądzaj. Wszyscy jesteśmy samolubni, kiedy się boimy.”", ok: true },
+                { t: "„Masz rację, musisz to zmienić.”", why: "Dokładasz wstydu. Wstyd odbiera energię potrzebną do zmiany." },
+                { t: "„Nie, wcale nie jesteś samolubny.”", why: "Zaprzeczasz jego szczeremu wglądowi. Lepiej go przeformułować." }
+              ],
+              tony: "Zdjął z niego wstyd i od razu kazał mu spojrzeć w oczy Jackie. Fabio się uśmiechnął i powiedział: „Ona jest kulą miłości. Chcę jej to oddać”.",
+              explain: "Przyznanie się do błędu to moment kruchości. Nazwij mechanizm (strach) bez oceny osoby, a klient może iść dalej.",
+              src: "yt", ch: "Jackie i Fabio, cz. 3"
+            }
+          ]
+        },
+        {
+          id: "fa-l2", title: "Odgrywanie ról i dwie dłonie",
+          items: [
+            { id: "fa-4", type: "mc", tech: "Odgrywanie ról",
+              dialog: [["K", "(Fabio) Nasza siedmioletnia córka od trzech lat pyta: „Kiedy kupisz mamie pierścionek?”. Presja rośnie."]],
+              q: "Jak Robbins pokazuje mu, co mówić?",
+              opts: [
+                { t: "Zamienia role: Fabio gra córkę, a Robbins gra Fabio. Modeluje odpowiedź, która nie obiecuje daty, ale daje pełne bezpieczeństwo: „Kocham twoją mamę i chcę z nią spędzić życie. Nie wiem jeszcze, kiedy, ale nie ma miejsca, w którym wolałbym być”.", ok: true },
+                { t: "Mówi mu, żeby po prostu się oświadczył.", why: "Narzucasz decyzję. Lepiej pokazać, jak rozmawiać z prawdy." },
+                { t: "Radzi, żeby zmienił temat, gdy córka pyta.", why: "Unikanie to właśnie problem. Dzieci czują unikanie." }
+              ],
+              tony: "Gdy Fabio, grając córkę, dalej się droczył, Robbins pokazał, jak przyjąć to z miłością: „Słyszę cię. Kocham twoją ciekawość. Nigdzie się nie wybieram”. Dodał: nie rozmawia się z siedmiolatką o śmierci brata i rozwodach dorosłych.",
+              explain: "Odgrywanie ról pozwala klientowi usłyszeć wzór odpowiedzi i poczuć, jak to jest być po drugiej stronie.",
+              src: "yt", ch: "Jackie i Fabio, cz. 5"
+            },
+            { id: "fa-5", type: "order", tech: "Integracja dwóch dłoni",
+              q: "Ułóż kroki techniki, którą Robbins zrobił z Fabio (ból w jednej dłoni, siła w drugiej).",
+              items: ["Ściska cały ból (brat, porażki, rozczarowania) w jednej dłoni", "Opisuje ból zmysłami: kolor, kształt, faktura, dźwięk i co mu mówi", "W drugiej dłoni ściska najpiękniejsze doświadczenia, zwycięstwa i miłość", "Opisuje je tymi samymi zmysłami i wypowiada ich przesłanie na głos", "Przelewa kolor siły do dłoni z bólem i miażdży kształt bólu", "Testuje: co jest teraz w każdej dłoni i co mówią"],
+              explain: "Po integracji obie dłonie były niebieskie i w kształcie serca. Dłoń z bólem mówiła „mogę”. Kluczowe jest dokładne zakodowanie obu stanów zmysłami i test na końcu.",
+              src: "yt", ch: "Jackie i Fabio, cz. 6"
+            }
+          ]
+        }
+      ]
+    },
+
+    /* ───────── Laura ───────── */
+    {
+      id: "yt-laura", title: "Laura: zostać czy odejść", sub: "Sztuka prośby · bilans sześciu potrzeb · 60 dni", len: "film do ustalenia",
+      lessons: [
+        {
+          id: "la-l1", title: "Prośba zamiast pretensji",
+          items: [
+            { type: "learn", title: "Kontekst",
+              body: ["Laura poznała męża w wieku 18 lat, jest dużo starszy, są razem 18 lat. Od kilku lat się oddalają. Mówi: „Boję się stracić wspaniałego mężczyznę, ale boję się też stracić siebie”. Najpierw prowadzi Sage, potem Robbins."]
+            },
+            { id: "la-1", type: "mc", tech: "Sztuka prośby",
+              q: "Sage proponuje Laurze, żeby powiedziała mężowi (Sage go gra), co czuje. Czego uczy?",
+              opts: [
+                { t: "Pod każdą pretensją jest prośba. Mów bez obwiniania i bez historii: „Czuję się samotna, nawet gdy jesteś w domu. Kiedy cię przytulam, nie odpychaj mnie, bo czuję się odrzucona”.", ok: true },
+                { t: "Że trzeba wyliczyć mu wszystkie błędy, żeby zrozumiał.", why: "Wyliczanie brzmi jak oskarżenie i wywołuje obronę." },
+                { t: "Że trzeba czekać, aż on sam się domyśli.", why: "Oczekiwanie, że partner się domyśli, to przepis na rozczarowanie." }
+              ],
+              tony: "Sage jako mąż odpowiedziała: przeprosiła, wyjaśniła, że to nie była jej intencja, i zapytała, co konkretnie by pomogło. Laura: wspólny czas z pełną obecnością, bez telefonu. Sage zaproponowała randkę w piątek, a potem odwróciła pytanie: czego ona mogłaby nie widzieć u niego? Na koniec: daj sobie 90 dni na zakochanie się na nowo, zanim zdecydujesz.",
+              explain: "Prośba ma trzy części: co czuję (bez obwiniania), czego potrzebuję i konkretne zachowanie. A potem pytanie do drugiej strony.",
+              src: "yt", ch: "Laura, cz. 1"
+            },
+            { id: "la-2", type: "mc", tech: "Bilans sześciu potrzeb",
+              q: "Laura ocenia związek od 0 do 10: pewność 9, różnorodność 0, znaczenie 4, miłość 2, rozwój 2, wkład 5. Co Robbins z tego wyciąga?",
+              opts: [
+                { t: "Silna jest tylko pewność i dlatego Laura wciąż jest w związku. Ale sama pewność sprawia, że związek staje się przewidywalny i martwy. Ból leży w różnorodności (0).", ok: true },
+                { t: "Że powinna odejść, bo większość ocen jest niska.", why: "Robbins mówi, że nie chodzi o „zostań lub odejdź”, tylko o zobaczenie, gdzie jest ból." },
+                { t: "Że mąż jest winny niskich ocen.", why: "Za chwilę każe jej ocenić to samo z perspektywy męża. Okaże się, że oboje dają sobie mało." }
+              ],
+              tony: "Potem kazał jej „założyć kapelusz męża” i ocenić, ile ona mu daje. Wyniki wyszły bardzo podobne. Złapał też, że zawyżyła jedną ocenę, żeby było mu milej, a jej śmiech to potwierdził.",
+              explain: "Bilans w dwie strony to jedno z najmocniejszych narzędzi w pracy z parą. Pokazuje, że oboje przestali dawać, a nie tylko jedno.",
+              src: "yt", ch: "Laura, cz. 2"
+            },
+            { id: "la-3", type: "mc", tech: "Reguły miłości partnera",
+              dialog: [["C", "Co sprawia, że on czuje się najbardziej kochany?"], ["K", "Chyba docenienie za to, jak ciężko pracuje."]],
+              q: "Jaki wniosek wyciąga Robbins?",
+              opts: [
+                { t: "To, co daje mu poczucie miłości, ona właśnie przestała robić, a wręcz irytuje ją jego praca. Wyzwanie: przez minimum 60 dni kochać go tak, jak on chce być kochany, czyli doceniać jego pracę, a nie prosić, żeby pracował mniej.", ok: true },
+                { t: "Że powinien pracować mniej, żeby mieć dla niej czas.", why: "To jej reguła miłości (bliskość, dotyk), a nie jego." },
+                { t: "Że jego reguła jest niezdrowa.", why: "Reguły się nie ocenia. Trzeba je znać, żeby trafiać w nie." }
+              ],
+              tony: "Dał też zasadę: jeśli po 60 dniach pełnego dawania on nie zareaguje, będziesz wiedziała bez żalu. Dodał regułę swoją i Sage: kiedy się kłócą, oboje walczą o to, kto pierwszy przeprosi. „Idziesz pierwszy. To jest przywództwo, to jest miłość.”",
+              explain: "Ludzie mają różne reguły na to, co znaczy „jestem kochany”. Klient często daje partnerowi to, czego sam chce, a nie to, czego partner potrzebuje.",
+              src: "yt", ch: "Laura, cz. 3"
+            }
+          ]
+        }
+      ]
+    },
+
+    /* ───────── Josh ───────── */
+    {
+      id: "yt-josh", title: "Josh: hipis i przedsiębiorca", sub: "Praca z częściami · pozytywna intencja · integracja", len: "film do ustalenia",
+      lessons: [
+        {
+          id: "jo-l1", title: "Dwie części, jeden człowiek",
+          items: [
+            { id: "jo-1", type: "mc", tech: "Praca z częściami",
+              dialog: [["K", "Mam dwie dusze. Jedna to hipis, druga to przedsiębiorca. Walczą ze sobą całe moje życie."]],
+              q: "Jak zaczynasz pracę z konfliktem części?",
+              opts: [
+                { t: "Rozmawiasz z każdą częścią osobno, każąc mu stanąć w innym miejscu na sali (kotwica przestrzenna), i pytasz każdą o jej pozytywną intencję: co dobrego próbuje mu dać.", ok: true },
+                { t: "Pytasz, która część jest ważniejsza.", why: "Wybór jednej oznacza walkę z drugą. Konflikt wróci." },
+                { t: "Analizujesz z nim plusy i minusy obu stylów życia.", why: "To rozmowa z głowy. Części najlepiej słyszeć bezpośrednio, z ciała i emocji." }
+              ],
+              tony: "Hipis powiedział: „Chcę mu pokazać, co naprawdę się liczy: rodzina, miłość, natura. Bylibyśmy szczęśliwi w przyczepie na pustyni”. Robbins w pełni to docenił, a potem zapytał hipisa: „Gdyby mógł być bardziej hojny, bardziej współczujący, bardziej zamożny i dzielić się tym, czy powinien?”. Hipis: „Tak”. To był most do drugiej części.",
+              explain: "Pierwsza zasada pracy z częściami: nie zwalczaj żadnej. Każda ma pozytywną intencję. Szukasz wartości, które obie podzielają.",
+              src: "yt", ch: "Josh, cz. 1–2"
+            },
+            { id: "jo-2", type: "mc", tech: "Reframing metafory",
+              dialog: [["K", "(jako przedsiębiorca) Był tak blisko wygranej. Ale jest zdruzgotany. Jego ogień zgasł."]],
+              q: "Co robi Robbins z „ogień zgasł”?",
+              opts: [
+                { t: "Wchodzi w metaforę: „W ogniu zawsze zostaje iskra, a wystarczy iskra, żeby rozpalił się na nowo”. A potem nazywa, co ogień przykryło: strach, że porażki oznaczają „nie jestem wystarczający”.", ok: true },
+                { t: "Mówi, że czas odpuścić biznes.", why: "To byłoby opowiedzenie się po stronie hipisa i dalsze dzielenie Josha." },
+                { t: "Motywuje go do kolejnej firmy.", why: "To byłoby opowiedzenie się po stronie przedsiębiorcy." }
+              ],
+              tony: "Wyjaśnił, że hipis pojawił się z dwóch powodów: jako wyjście, żeby nie mierzyć się ze strachem, i żeby Josh nie zapomniał, że już wygrał. Nazwał obie części braćmi: kochankiem i wojownikiem, którego też napędza miłość.",
+              explain: "Wejście w metaforę klienta i rozbudowanie jej o wyjście działa lepiej niż zaprzeczenie.",
+              src: "yt", ch: "Josh, cz. 3"
+            },
+            { id: "jo-3", type: "mc", tech: "Integracja części",
+              q: "Po zakodowaniu obu części w dłoniach (przedsiębiorca: czerwony, okrąg, gładki, mówi „wygraj”; hipis: biały, trójkąt, miękki, mówi „idź dalej”) i połączeniu ich, Robbins pyta: „Kim jesteś?”. Po co to pytanie?",
+              opts: [
+                { t: "Żeby integracja zakończyła się nową, wspólną tożsamością, a nie tylko przyjemnym uczuciem. Josh odpowiedział: „Twórcą”.", ok: true },
+                { t: "Żeby sprawdzić, czy Josh go słucha.", why: "To pytanie ma utrwalić zmianę na poziomie tożsamości." },
+                { t: "Żeby zakończyć ćwiczenie.", why: "Robbins jeszcze nie kończy: potem każe obu częściom zamieszkać razem w sercu." }
+              ],
+              tony: "Potem dał obu częściom zabawne przezwiska (Jerry Garcia i Maestro), żeby miały lekki sygnał, gdy któraś przesadzi, i zaprosił przedsiębiorcę, który mieszkał w brzuchu, do serca, gdzie mieszka hipis. Josh: „Tu jest ciepło. Jest ogień. Czuję się jak w domu”.",
+              explain: "Zmiana na poziomie tożsamości jest najtrwalsza. Kończ integrację pytaniem „kim jesteś teraz?”.",
+              src: "yt", ch: "Josh, cz. 4–5"
+            }
+          ]
+        }
+      ]
+    },
+
+    /* ───────── Debbie ───────── */
+    {
+      id: "yt-debbie", title: "Debbie: życie nie swoim życiem", sub: "Termostat tożsamości · czyjej miłości pragnęłaś · ojciec", len: "film do ustalenia",
+      lessons: [
+        {
+          id: "de-l1", title: "Kim musiałaś być?",
+          items: [
+            { id: "de-1", type: "mc", tech: "Termostat tożsamości",
+              dialog: [["K", "Daję dużo miłości wszystkim wokół. Jestem silna, wszyscy to widzą. Ale ciągle tylko wylewam to z siebie."]],
+              q: "Robbins mówi, że to nie jest coś, co Debbie robi, tylko jej tożsamość. Jak to wyjaśnia?",
+              opts: [
+                { t: "Tożsamość działa jak termostat: gdy życie wychodzi poza ustawioną temperaturę (np. ktoś daje jej, a nie ona komuś), system ją cofa albo zaczyna się sabotaż. „To nie jest miejsce, w którym chcesz być. To dom.”", ok: true },
+                { t: "Że ludzie mają po prostu stałe cechy charakteru.", why: "Termostat można przestawić. Tożsamość da się poszerzyć." },
+                { t: "Że dawanie jest zawsze dobre.", why: "Dawanie jest piękne, ale jako jedyna tożsamość przyciąga biorców i kończy się wyczerpaniem." }
+              ],
+              tony: "Opowiedział o sobie: gdy nie miał pieniędzy, zapraszał ludzi na lunch, sam zamawiał sałatkę i mówił, że już jadł. Jego model brzmiał: poświęcenie oznacza, że jestem wart miłości. Dodał: kto stale jest dającym, ten zaprasza do życia biorców, a oni nie są złymi ludźmi.",
+              explain: "Gdy klient opisuje zachowanie jako „to jestem ja”, pracujesz na poziomie tożsamości, nie zachowania.",
+              src: "yt", ch: "Debbie, cz. 1"
+            },
+            { id: "de-2", type: "mc", tech: "Słuchanie strategii",
+              dialog: [["C", "Jak wychodzisz z poczucia winy, kiedy już wychodzisz?"], ["K", "Muszę iść na spacer, pobiegać, odejść od ludzi, wejść w swoją głowę i się zresetować."]],
+              q: "Co zauważa Robbins?",
+              opts: [
+                { t: "Mówi, że wchodzi w głowę, ale wszystko, co wymieniła, jest fizyczne. Działa radykalna zmiana fizjologii, a dopiero w lepszym stanie radzi sobie z głową.", ok: true },
+                { t: "Że ucieka od ludzi i to trzeba zmienić.", why: "To akurat jej zdrowa strategia. Ważne, żeby zobaczyła, co w niej naprawdę działa." },
+                { t: "Że potrzebuje terapii.", why: "Robbins pokazuje jej zasób, który już ma." }
+              ],
+              tony: "Powiedział: „Wejdziesz w głowę, jesteś martwa. Zapiszcie to”. Potem poprosił, żeby pokazała ciałem poczucie winy (spięta, wzrok w bok, brak oddechu), a następnie prawdziwą wdzięczność. Sala zobaczyła zmianę, zanim Debbie cokolwiek powiedziała.",
+              explain: "Klient często błędnie nazywa swoją skuteczną strategię. Twoja rola: pokazać mu, co faktycznie działa, żeby mógł to robić świadomie.",
+              src: "yt", ch: "Debbie, cz. 2"
+            },
+            { id: "de-3", type: "mc", tech: "Źródło warunkowania",
+              q: "Robbins dociera do źródła wzorca Debbie w minutę. Jakimi pytaniami?",
+              opts: [
+                { t: "„Czyjej miłości najbardziej pragnęłaś: mamy czy taty?” Potem: „Kim musiałaś być dla ojca, żeby mieć jego uwagę i szacunek?” (silna, odporna, bez wymówek) i „Kim nigdy nie mogłaś być?” (słaba).", ok: true },
+                { t: "„Opowiedz mi o swoim dzieciństwie.”", why: "Zbyt szerokie. Dostaniesz długą historię zamiast mechanizmu." },
+                { t: "„Dlaczego czujesz się winna?”", why: "Dostaniesz racjonalizacje, a nie źródło." }
+              ],
+              tony: "Prosił o pierwszą odpowiedź, bez myślenia. Na pytanie, ile z tych cech ma dziś, Debbie odpowiedziała: wszystkie. Ojciec zmarł, gdy miała 17 lat. Robbins wyjaśnił: ojciec z miłości dał jej to, co jemu pomogło przetrwać, ale ona jest kobieca w środku i żyje życiem ojca, a nie swoim.",
+              explain: "Te trzy pytania (czyjej miłości, kim musiałeś być, kim nie mogłeś być) szybko odsłaniają, skąd wzięła się tożsamość klienta.",
+              src: "yt", ch: "Debbie, cz. 3"
+            },
+            { id: "de-4", type: "mc", tech: "Reframing intencji rodzica",
+              dialog: [["N", "Debbie ma zamknięte oczy i wyobraża sobie obecność zmarłego ojca."]],
+              q: "Jakie pytanie zadaje Robbins, żeby rozbić jej dziecięcą interpretację?",
+              opts: [
+                { t: "„Czy kochał cię, bo byłaś silna, czy uczył cię siły, bo cię kochał?”", ok: true },
+                { t: "„Co byś mu dziś powiedziała?”", why: "Może się przydać, ale nie zmienia znaczenia, na którym stoi jej wzorzec." },
+                { t: "„Czy był dobrym ojcem?”", why: "Ocena ojca nie jest tu celem. Chodzi o znaczenie jego miłości." }
+              ],
+              tony: "Potem poprosił, żeby usłyszała, co ojciec mówi jej teraz. Debbie: „Mam zaufać sobie. Nauczył mnie wszystkiego. To teraz moje życie. Nie muszę już niczego udowadniać”. Robbins zaproponował: uszanuj dzisiejsze życzenia ojca, a nie te dawne. Sage dała jej trzy praktyki kobiecości: kąpiel ze świecami, ruch i taniec, modlitwa i wdzięczność.",
+              explain: "Odwrócenie przyczyny i skutku („kochał, więc uczył”, a nie „uczył, bo musiałam zasłużyć”) zdejmuje warunek z miłości.",
+              src: "yt", ch: "Debbie, cz. 5–6"
+            }
+          ]
+        }
+      ]
+    },
+
+    /* ───────── David i Anna ───────── */
+    {
+      id: "yt-short", title: "David i Anna: ból i porażka", sub: "Duchowy ból · presupozycje · porażka jako nauka", len: "film do ustalenia",
+      lessons: [
+        {
+          id: "sh-l1", title: "Z bólu w siłę, z porażki w naukę",
+          items: [
+            { type: "learn", title: "Kontekst",
+              body: ["David przeszedł bardzo dużo (molestowanie przez brata w dzieciństwie, PTSD, śmierć brata na białaczkę). Anna pyta, jak radzić sobie z porażkami i z poczuciem, że traci czas."],
+              note: "Przy takiej historii jak Davida pamiętaj o swojej granicy: coaching nie zastępuje terapii traumy."
+            },
+            { id: "sh-1", type: "mc", tech: "Presupozycje",
+              q: "Robbins mówi: zamiast „jak mogę być wdzięczny?” pytaj „jak mogę być jeszcze bardziej wdzięczny?”. Dlaczego?",
+              opts: [
+                { t: "„Jeszcze bardziej” zakłada, że już jesteś wdzięczny. Każde pytanie buduje na czymś, co już jest, zamiast na braku.", ok: true },
+                { t: "Bo brzmi bardziej pozytywnie.", why: "Chodzi o konkretny mechanizm: założenie ukryte w pytaniu." },
+                { t: "Bo dłuższe pytania lepiej działają.", why: "Długość nie ma znaczenia. Liczy się presupozycja." }
+              ],
+              tony: "Porównał to do różnicy między „będę zdeterminowany” a „jestem zdeterminowany”, powiedzianym z pełną fizjologią.",
+              explain: "To ta sama zasada co „co nie jest jeszcze idealne?” z działu o pytaniach.",
+              src: "yt", ch: "David"
+            },
+            { id: "sh-2", type: "mc", tech: "Znaczenie bólu",
+              dialog: [["K", "Mam każdą diagnozę: ADHD, chorobę dwubiegunową, PTSD. Byłem molestowany. Nigdy nie będę tak dobry jak inni."]],
+              q: "Jak Robbins odpowiada na ten stos doświadczeń?",
+              opts: [
+                { t: "Najpierw szczerze: „Bardzo mi przykro, nikt nie powinien przez to przechodzić”. Potem nazywa to bólem duchowym i daje nowe znaczenie: ludzie, którzy przeszli niesprawiedliwy ból, rozwijają siłę i wrażliwość, jakiej nie ma nikt inny. „To zrobiło z ciebie kochającego człowieka, jakim jesteś.”", ok: true },
+                { t: "Mówi, że diagnozy to tylko etykiety i trzeba o nich zapomnieć.", why: "Bagatelizujesz realny ból. Najpierw uznanie, potem nowe znaczenie." },
+                { t: "Prosi o szczegóły każdego zdarzenia.", why: "Wpychasz go w przeżywanie wszystkiego na nowo." }
+              ],
+              tony: "Dodał perspektywę czasu: gdyby policzyć godziny tych zdarzeń w ciągu 43 lat, to mała część życia, tylko tak intensywna, że wystaje. David sam opowiedział potem, że przez lata spał z dziećmi w ramionach, żeby nigdy nie spotkało ich to, co jego, i stał się „ojcem twardzielem”. Robbins zatrzymał salę, żeby David to poczuł.",
+              explain: "Nowe znaczenie bólu nie zaprzecza krzywdzie. Pokazuje, co z niej wyrosło, i często klient sam to potem odkrywa.",
+              src: "yt", ch: "David"
+            },
+            { id: "sh-3", type: "order", tech: "RPM",
+              q: "Annie przeszkadza, że lista zadań nigdy się nie kończy. Ułóż trzy pytania RPM, którymi Robbins zastępuje listę zadań.",
+              items: ["Czego naprawdę chcę? Jaki jest rezultat (3–5 najważniejszych na ten tydzień lub dzień)?", "Dlaczego tego chcę? Jaki jest cel i emocja?", "Co muszę zrobić? Plan masowego działania, z którego wybieram 20% działań dających 80% efektu"],
+              explain: "Pytanie „co mam zrobić?” bez rezultatu i celu daje stres i reagowanie na to, co przychodzi. Najpierw rezultat i powód, potem działania. Gdy coś przerwie dzień, wracasz do pytania o rezultat.",
+              src: "yt", ch: "Anna"
+            },
+            { id: "sh-4", type: "mc", tech: "Porażka jako nauka",
+              q: "Robbins opowiada Annie historię Petera Gubera, który jako chłopiec patrzył, jak ojciec niepełnosprawnego sąsiada każdego dnia zostawiał syna z rowerem. Jaki jest morał?",
+              opts: [
+                { t: "Ojciec kochał syna, dlatego pozwolił mu się zmagać. Porażka nie zabija, zabija poddanie się. Porażki i odrzucenia to progi zwalniające na drodze do sukcesu.", ok: true },
+                { t: "Że trzeba być twardym dla innych.", why: "Morał nie dotyczy surowości, tylko znaczenia porażki." },
+                { t: "Że niektórym przychodzi to łatwiej.", why: "Historia mówi coś przeciwnego: chłopiec przebił się przez trzy tygodnie upadków." }
+              ],
+              tony: "Dodał: przeceniamy, ile zrobimy w rok, a nie doceniamy, ile zrobimy w dekadę. Najbardziej skuteczni ludzie ponieśli 10 razy więcej porażek niż inni, tylko nie zapisali ich jako porażek. Zamień słowo „porażka” na „nauka” i poczuj różnicę w ciele.",
+              explain: "Porażka to oczekiwanie, że wszystko zadziała za pierwszym razem. Zmiana znaczenia (porażka → nauka) zmienia stan, a stan zmienia działanie.",
+              src: "yt", ch: "Anna"
             }
           ]
         }
