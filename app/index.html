@@ -185,6 +185,14 @@ textarea{width:100%;min-height:130px;padding:12px 14px;border-radius:14px;border
 .verdict summary{cursor:pointer;font-weight:600;color:var(--muted)}
 .verdict details ul{margin:6px 0 0;padding-left:18px;display:grid;gap:6px}
 .flag{color:var(--xp);font-weight:600}
+.verdict a,.vlink{color:inherit;font-weight:600;text-underline-offset:3px}
+.vlink{font-size:13px;opacity:.95;overflow-wrap:anywhere}
+.tony{order:2;padding:10px 12px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.tony b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.tony p{font-size:15px}
+.verdict{display:flex;flex-direction:column}
+.verdict > h3{order:0}.verdict > p,.verdict > ol{order:1}.verdict details{order:3}.verdict .src-line{order:4}
+.unit.iv .unit-head{background:var(--ink);color:var(--bg)}
 
 /* ── Koniec lekcji ── */
 .done-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;padding-block:40px}
@@ -253,7 +261,8 @@ function dueIds(){ const t = today(); return Object.keys(S.srs).filter(id => S.s
 
 /* Indeksy */
 const itemById = {}, lessonById = {}, unitOfLesson = {};
-C.units.forEach(u => u.lessons.forEach(l => { lessonById[l.id] = l; unitOfLesson[l.id] = u; l.items.forEach(it => { if (it.id) { itemById[it.id] = it; it._unit = u; } }); }));
+(C.interventions || []).forEach(v => { v.src = "yt"; v.ch = v.len; });
+C.units.concat(C.interventions || []).forEach(u => u.lessons.forEach(l => { lessonById[l.id] = l; unitOfLesson[l.id] = u; l.items.forEach(it => { if (it.id) { itemById[it.id] = it; it._unit = u; } }); }));
 const srcName = k => (C.sources[k] && C.sources[k].short) || k;
 
 function plural(n, one, few, many){ if (n === 1) return one; const d = n % 10, t = n % 100; return (d >= 2 && d <= 4 && (t < 12 || t > 14)) ? few : many; }
@@ -271,6 +280,16 @@ function topBar(){
     <div class="stat streak ${st? "" : "off"}" title="Passa dni">${I.flame}${st}</div>
     <div class="stat xp" title="Punkty doświadczenia">${I.bolt}${S.xp}</div>
   </div></header>`;
+}
+
+function nodeHtml(l){
+  const n = S.done[l.id] || 0;
+  const cnt = l.items.filter(i => i.id).length;
+  return `<button class="node ${n? "done" : "fresh"}" data-lesson="${l.id}">
+    <span class="disc">${n? I.star : I.chat}</span>
+    <span class="label">${esc(l.title)}</span>
+    <span class="meta">${cnt} ${plural(cnt,"ćwiczenie","ćwiczenia","ćwiczeń")}${n? ` · ukończono ×${n}` : ""}</span>
+  </button>`;
 }
 
 function renderHome(){
@@ -292,17 +311,21 @@ function renderHome(){
           <h2>${esc(u.title)}</h2><p>${esc(u.sub)}</p>
           ${u.verify? `<span class="chip">Do weryfikacji z materiałami RMT</span>`:""}
         </div><div class="nodes">`;
-      u.lessons.forEach(l => {
-        const n = S.done[l.id] || 0;
-        const cnt = l.items.filter(i => i.id).length;
-        html += `<button class="node ${n? "done" : "fresh"}" data-lesson="${l.id}">
-          <span class="disc">${n? I.star : I.chat}</span>
-          <span class="label">${esc(l.title)}</span>
-          <span class="meta">${cnt} ${plural(cnt,"ćwiczenie","ćwiczenia","ćwiczeń")}${n?` · ukończono ×${n}` : ""}</span>
-        </button>`;
-      });
+      u.lessons.forEach(l => { html += nodeHtml(l); });
       html += `</div></section>`;
     });
+    if ((C.interventions || []).length){
+      html += `<h2 class="section-title">Prawdziwe interwencje</h2><p>Sesje Robbinsa krok po kroku: najpierw Twój ruch, potem to, co zrobił on.</p>`;
+      C.interventions.forEach((v, vi) => {
+        html += `<section class="unit iv"><div class="unit-head">
+          <span class="eyebrow">Interwencja ${pad(vi+1)} · YouTube · ${esc(v.len)}</span>
+          <h2>${esc(v.title)}</h2><p>${esc(v.sub)}</p>
+          ${v.video ? `<a class="vlink" href="${esc(v.video)}" target="_blank" rel="noopener">Obejrzyj na YouTube: ${esc(v.videoTitle)}</a>` : ""}
+        </div><div class="nodes">`;
+        v.lessons.forEach(l => { html += nodeHtml(l); });
+        html += `</div></section>`;
+      });
+    }
     html += `<h2 class="section-title">Następne ścieżki</h2><p>Odblokują się, gdy dostanę materiały.</p><div class="locked">`;
     C.upcoming.forEach(p => {
       html += `<div class="lock-card">${I.lock}<div><h3>${esc(p.title)}</h3><p>${esc(p.sub)}. Potrzebne: ${esc(p.need)}.</p></div></div>`;
@@ -326,11 +349,11 @@ function renderHome(){
     html += `<div class="src-list">`;
     Object.keys(C.sources).forEach(k => {
       const s = C.sources[k];
-      const label = {ready:"W aplikacji", waiting:"Czeka na materiały", queued:"W kolejce"}[s.status];
+      const label = s.label || {ready:"W aplikacji", waiting:"Czeka na materiały", queued:"W kolejce"}[s.status];
       const desc = {
         awaken:"Działy 1–7. Lekcje napisane własnymi słowami, z numerem rozdziału przy każdym ćwiczeniu.",
         rmt:"Dział 8 (sześć potrzeb) to wersja wstępna. Pełna ścieżka powstanie z transkrypcji szkolenia.",
-        yt:"Ćwiczenia „co zrobiłbyś teraz” na prawdziwych interwencjach, z odnośnikiem do minuty filmu.",
+        yt:"Interwencja 01 (Callum) jest w aplikacji. Pozostałe 12 filmów z playlisty czeka na transkrypcje.",
         giant:"Krótkie ćwiczenie dnia.",
         life:"Osobna ścieżka: energia, zdrowie, stan."
       }[k] || "";
@@ -405,7 +428,11 @@ function head(it){
 function srcLine(it){
   const u = it._unit || {};
   const flag = (it.verify || u.verify) ? ` · <span class="flag">do weryfikacji</span>` : "";
-  return `<p class="src-line">${esc(srcName(it.src))} · ${esc(it.ch || "")}${flag}</p>`;
+  const vid = u.video ? ` · <a href="${esc(u.video)}" target="_blank" rel="noopener">film</a>` : "";
+  return `<p class="src-line">${esc(srcName(it.src))} · ${esc(it.ch || "")}${vid}${flag}</p>`;
+}
+function tonyBox(it){
+  return it.tony ? `<div class="tony"><b>Co zrobił Robbins</b><p>${esc(it.tony)}</p></div>` : "";
 }
 
 function renderItem(){
@@ -445,7 +472,7 @@ function checkMC(){
     ? `<h3>Dobrze!</h3><p>${esc(it.explain)}</p>`
     : `<h3>Nie tym razem</h3><p class="why">${esc(o.why || "")}</p><p><b>Lepszy ruch:</b> ${esc(right.t)}</p><p>${esc(it.explain)}</p>`;
   const more = others.length ? `<details><summary>Dlaczego nie pozostałe</summary><ul>${others.map(x => `<li><b>${esc(x.t)}</b> ${esc(x.why)}</li>`).join("")}</ul></details>` : "";
-  result(o.ok ? "ok" : "bad", body + more + srcLine(it));
+  result(o.ok ? "ok" : "bad", tonyBox(it) + body + more + srcLine(it));
 }
 
 /* Ułóż w kolejności */
